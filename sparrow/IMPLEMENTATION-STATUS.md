@@ -27,6 +27,8 @@ Secure identity, database, cross-user permissions, verified opportunity catalog,
 
 ## Deployment and production handoff
 
+Vercel configuration added: the repository-root `vercel.json` explicitly serves `sparrow/dist/`, skips installation (there are no runtime dependencies), and runs `npm run check` before deployment. The project Root Directory must remain the repository root. The reported `https://newsparrow.vercel.app/` returned HTTP 404 before this configuration was added. Live redeployment verification is pending.
+
 `sparrow/dist/` is a buildless static bundle. `npm start` serves it on the loopback interface. No services were purchased and no public publication occurred.
 
 `sparrow/sparrow-preview.zip` contains the static deployment bundle. Run instructions and source remain in the workspace. Desktop, tablet, and mobile screenshots are in `sparrow/shots/`.

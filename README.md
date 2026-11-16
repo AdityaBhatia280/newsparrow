@@ -10,6 +10,14 @@ npm start
 
 Open http://127.0.0.1:4173. No installation or build is required. Deployable static files are in `sparrow/dist/`.
 
+## Vercel deployment
+
+Import this repository with the project Root Directory set to the repository root (leave it blank). The committed `vercel.json` selects the **Other** framework preset, skips dependency installation, runs `npm run check`, and serves `sparrow/dist/` as the output directory. The local `npm start` command is not the deployment build command.
+
+Push changes to the connected production branch to redeploy. App routes use hashes, such as `/#/opportunities`, so no catch-all rewrite is required. Missing asset URLs retain normal 404 responses.
+
+The deployed preview remains browser-local. Publik sign-in, AI, and server persistence still require their separate integration.
+
 ```sh
 npm run check
 npm test
