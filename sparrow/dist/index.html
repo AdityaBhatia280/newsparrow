@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-type="software" data-motion>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sparrow — Find your next step</title>
+    <meta
+      name="description"
+      content="A college-preparation preview for high school students. Explore example opportunities, organize applications, and build a plan that fits you."
+    />
+    <meta name="page-type" content="software" />
+    <meta name="site-kind" content="software" />
+    <meta name="theme-color" content="#FF8000" />
+    <meta property="og:title" content="Sparrow — Find your next step" />
+    <meta
+      property="og:description"
+      content="Explore opportunities and keep your applications moving."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/motion/motion.css" />
+    <script>
+      document.documentElement.classList.add("m-enter");
+      setTimeout(
+        () => document.documentElement.classList.add("m-enter-done"),
+        700,
+      );
+    </script>
+  </head>
+  <body>
+    <!-- Software; collage hero, original papaya brand palette; word-highlight in the free organization section. Explicit example labels follow the owner's brief. -->
+    <a class="skip" href="#main">Skip to content</a>
+    <header id="header"></header>
+    <main id="main" tabindex="-1"></main>
+    <footer id="footer"></footer>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="confirm-dialog" aria-labelledby="dialog-title">
+      <form method="dialog">
+        <h2 id="dialog-title">Remove saved work?</h2>
+        <p>Your notes and personal tasks for this item will also be removed.</p>
+        <div class="actions">
+          <button class="btn secondary" value="cancel">Keep item</button
+          ><button class="btn" value="remove">Remove item</button>
+        </div>
+      </form>
+    </dialog>
+    <noscript
+      ><p class="notice">
+        Enable JavaScript to use Sparrow's local preview.
+      </p></noscript
+    >
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+    <script type="module" src="./assets/motion/motion.js"></script>
+    <script type="module" src="./assets/moments/moments.js"></script>
+  </body>
+</html>

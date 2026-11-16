@@ -1,0 +1,14 @@
+{
+  "name": "sparrow-local-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sparrow college-preparation interactive foundation",
+  "scripts": {
+    "start": "node sparrow/server.mjs",
+    "check": "node --check sparrow/dist/app.js && node --check sparrow/dist/data.js",
+    "test": "node sparrow/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
