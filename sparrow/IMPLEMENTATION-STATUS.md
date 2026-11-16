@@ -23,17 +23,17 @@ Stage A: interactive browser-local foundation implemented. Production infrastruc
 
 ## Not connected / not claimed
 
-Secure identity, database, cross-user permissions, verified opportunity catalog, resume parsing, extraction, moderation, AI calls, credit accounting, payments, transfers, official usage counting, deployment, and publik listing.
+Secure identity, database, cross-user permissions, verified opportunity catalog, resume parsing, extraction, moderation, AI calls, credit accounting, payments, transfers, official usage counting, and publik listing. Static preview deployment on Vercel is verified below.
 
 ## Deployment and production handoff
 
-Vercel configuration added: the repository-root `vercel.json` explicitly serves `sparrow/dist/`, skips installation (there are no runtime dependencies), and runs `npm run check` before deployment. The project Root Directory must remain the repository root. The reported `https://newsparrow.vercel.app/` returned HTTP 404 before this configuration was added. Live redeployment verification is pending.
+Vercel configuration added: the repository-root `vercel.json` explicitly serves `sparrow/dist/`, skips installation (there are no runtime dependencies), and runs `npm run check` before deployment. The project Root Directory must remain the repository root. The reported `https://newsparrow.vercel.app/` returned HTTP 404 before this configuration was added. After pushing the fix, the live homepage and all ten runtime assets returned HTTP 200 with their expected content types. The homepage title is “Sparrow — Find your next step.”
 
-`sparrow/dist/` is a buildless static bundle. `npm start` serves it on the loopback interface. No services were purchased and no public publication occurred.
+`sparrow/dist/` is a buildless static bundle. `npm start` serves it on the loopback interface. The owner connected the public repository to Vercel; the static preview is now accessible at `https://newsparrow.vercel.app/`. No services were purchased during the repair.
 
 `sparrow/sparrow-preview.zip` contains the static deployment bundle. Run instructions and source remain in the workspace. Desktop, tablet, and mobile screenshots are in `sparrow/shots/`.
 
-Sites publishing tools were absent from this session, so owner-private hosted deployment could not be performed. No Site ID or listing ID has been invented.
+The initial foundation session had no Sites publishing tools, so it did not perform owner-private hosting. The later Vercel deployment is separate from Sites and from the pending publik listing.
 
 The owner's complete supplied brief is preserved in `Sparrow-Publishing.md`. For Phase B, select production storage and a supported publik hosted-web identity recipe before adding user accounts. At production integration time fetch the current raw `https://publikhq.com/skills/setup.md`, follow the device/listing approval order, reuse an existing listing, and test the real release and per-user attribution. Do not substitute this foundation for production integration.
 

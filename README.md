@@ -31,4 +31,4 @@ Data stays in this browser's localStorage under `sparrow.preview.v1`. Settings s
 
 Opportunity records are fictional. College names link to official homepages but are not complete verified records. AI, identity, resume parsing, source fetching, moderation, billing, rewards, transfers, and official usage counting are not connected. The credit view is fixed at zero.
 
-See [implementation status](sparrow/IMPLEMENTATION-STATUS.md) for validation and production handoff. Hosting publication and publik listing setup have not been completed.
+See [implementation status](sparrow/IMPLEMENTATION-STATUS.md) for validation and production handoff. The static preview is live at https://newsparrow.vercel.app/. Publik listing, sign-in, and API integration remain pending.
