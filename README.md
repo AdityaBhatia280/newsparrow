@@ -1,34 +1,40 @@
-# Sparrow
+﻿# Sparrow
 
-Interactive foundation for a college-preparation and extracurricular planning app. This repository follows the supplied college-preparation brief and contains no video-editor infrastructure.
+A college-preparation and extracurricular planning app. Live website: https://newsparrow.vercel.app/. Publik listing: https://publikhq.com/newsparrow.
 
-Run with Node 22 or newer:
+Sparrow opens with Sign in with publik. The server adapts the official publik module to separate visitor sessions. Provider credentials live in encrypted, HttpOnly cookies and server environment configuration; no credentials are exposed to frontend JavaScript or localStorage.
+
+## Development
+
+Use Node 22.15 or newer within the Node 22 release line:
 
 ```sh
+npm ci
+npm run build
 npm start
 ```
 
-Open http://127.0.0.1:4173. No installation or build is required. Deployable static files are in `sparrow/dist/`.
-
-## Vercel deployment
-
-Import this repository with the project Root Directory set to the repository root (leave it blank). The committed `vercel.json` selects the **Other** framework preset, skips dependency installation, runs `npm run check`, and serves `sparrow/dist/` as the output directory. The local `npm start` command is not the deployment build command.
-
-Push changes to the connected production branch to redeploy. App routes use hashes, such as `/#/opportunities`, so no catch-all rewrite is required. Missing asset URLs retain normal 404 responses.
-
-The deployed preview remains browser-local. Publik sign-in, AI, and server persistence still require their separate integration.
+Open http://127.0.0.1:4173. Local start loads the ignored `.env` using Node's native environment-file support. Configure `PUBLIK_APP_TOKEN` and `SPARROW_SESSION_SECRET` in the server environment. Never commit or share their values.
 
 ```sh
-npm run check
+npm run test:integration
 npm test
 ```
 
-The browser smoke test uses an isolated headless Chrome or Edge profile, launches its own loopback server, and closes only its own browser process. Set `CHROME_PATH` if the browser is not in a standard Windows location.
+Integration tests use an isolated local fake provider. Browser tests launch an isolated headless Chrome/Edge profile and exercise the real sign-in adapter against that test fixture, never a production authentication bypass. Set `CHROME_PATH` if necessary. No test makes a paid provider call.
 
-Implemented routes: `/`, `/start`, `/onboarding`, `/opportunities`, `/opportunities/:id`, `/saved`, `/colleges`, `/colleges/:id`, `/advisor`, `/contribute`, `/credits`, and `/settings`, using hash routing. `/review` explains that moderation is unavailable. Unknown routes show a recovery page.
+## Vercel
 
-Data stays in this browser's localStorage under `sparrow.preview.v1`. Settings supports JSON export and full local deletion. Use sample information; this is not secure account storage.
+Keep the project Root Directory at the repository root. `vercel.json` uses the Other framework preset, `npm ci`, `npm run build`, static output `sparrow/dist/`, and a Node API function at `/api/publik`. Set `PUBLIK_APP_TOKEN` and `SPARROW_SESSION_SECRET` as sensitive server environment variables before deploying. They must not have public frontend prefixes. Push the production branch to deploy.
 
-Opportunity records are fictional. College names link to official homepages but are not complete verified records. AI, identity, resume parsing, source fetching, moderation, billing, rewards, transfers, and official usage counting are not connected. The credit view is fixed at zero.
+The site uses hash routes (`/#/opportunities`), so no catch-all rewrite is required. The API function keeps credentials and paid requests on the server. A missing server configuration produces an honest unavailable sign-in screen.
 
-See [implementation status](sparrow/IMPLEMENTATION-STATUS.md) for validation and production handoff. The static preview is live at https://newsparrow.vercel.app/. Publik listing, sign-in, and API integration remain pending.
+## Current scope
+
+Onboarding, example opportunities/details, application statuses/tasks, college shortlists, local submissions, and the Sparrow zero-credit explanation remain available. The Advisor supports explicit, confirmed general planning and draft feedback through `publik-balanced`, with validated structured output and saved browser-local responses. Personal publik keys can be configured in Settings. Official usage counting is optional and can be turned off.
+
+Profile data and work remain browser-local, under a namespace for this sign-in. They do not sync across devices. Settings supports export, deletion, and explicit import of the earlier unsigned local preview. LocalStorage is not a private cloud database; use sample information and avoid sensitive data.
+
+Opportunity records are fictional and are not sent to AI as verified records. College entries are illustrative records with official homepages. Source fetching, extraction, moderation, resume parsing, real Sparrow credit purchases/transfers, and a verified catalog remain unconnected.
+
+See [integration notes](sparrow/PUBLIK-INTEGRATION.md) and [implementation status](sparrow/IMPLEMENTATION-STATUS.md) for proof and limitations.

@@ -1,0 +1,16 @@
+**
+!Dockerfile
+!package.json
+!package-lock.json
+!server/
+!server/*.mjs
+!sparrow/
+!sparrow/server.mjs
+!sparrow/build.mjs
+!sparrow/dist/
+!sparrow/dist/**
+**/.env
+**/.env.*
+**/*.key
+**/*.pem
+**/publik-app-token.txt

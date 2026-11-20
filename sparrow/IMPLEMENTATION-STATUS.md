@@ -1,6 +1,29 @@
 # Implementation status
 
-Stage A: interactive browser-local foundation implemented. Production infrastructure remains unconnected.
+Stage A is implemented. Publik sign-in and Advisor integration are drafted and tested locally. Vercel server secrets are configured, but production rollout remains pending the current official hosted-web SDK migration, a real app login, private database storage, and deployment funding decisions.
+
+## Cloud Run preparation (2026-11-17)
+
+The signed-in Google Cloud Console showed existing project `publik-515015`, display name publik; its ownership was verified in IAM. The private owner email is not recorded in this public source file. Cloud Run showed its initial setup overview with no deployed service. A paid billing account was present, but organizer sponsorship and the agreed monthly budget were not confirmed.
+
+Prepared a Dockerfile, secret-safe Docker/gcloud upload exclusions, Cloud Run PORT/0.0.0.0 listening, and Secure cookies with local-origin exceptions disabled in hosted runtimes. No paid service, public invoker access, billing change, or Cloud Run deployment was created. Docker/gcloud executables are not installed on this machine, so no container build is claimed. See [cloudrun/README.md](../cloudrun/README.md) for remaining steps.
+
+
+## Updated hosted-web requirements (2026-11-17)
+
+The current raw publik setup guide now specifies the official `publik.server.ts` module, an existing app sign-in, and database-backed per-user publik records. The earlier encrypted-cookie adapter remains an undeployed draft and must be migrated to this supported server module before production rollout. Sparrow currently has neither a configured app identity provider nor a private database. Backend selection/configuration is the next required input; no second listing or app token should be created. Vercel CLI access has been verified and the existing `newsparrow` project has been linked.
+
+The existing draft still passes `npm run build`, `npm run test:integration`, and all 18 browser smoke checks. Those results do not prove compliance with the newly supplied hosted-web module or a production AI request.
+
+## Publik setup progress
+
+- Publik accepted the approved listing as **Sparrow** at https://publikhq.com/newsparrow, with response status `live` and `ai.chat` enabled. Slug remains `newsparrow`. No license was added.
+- Official Node module adapted for isolated hosted-web visitor sessions, encrypted HttpOnly cookies, a first-screen sign-in gate, plan/personal-key choices, and official telemetry with opt-out.
+- Advisor request context and response schema are validated with Zod; no fictional listing facts are passed as verified sources. Explicit confirmation is required. 402/provider failures retain drafts and do not automatically retry.
+- Real local upstream check succeeded: the minted server token provisioned a publik install, GET /wallet answered, and the app displayed its Sign in with publik gate and official claim link. No model request was sent in that check.
+- Automated provider/session integration checks passed. Browser checks cover the gate, ordinary workflows, confirmed AI requests against an isolated fixture, and draft retention on 402. The production AI path still needs a real signed-in user request.
+- Vercel CLI access is verified and the existing project is linked. `PUBLIK_APP_TOKEN`, `SPARROW_SESSION_SECRET`, and `PUBLIK_INSTALL_SECRET` are configured as sensitive production server values. The existing static production deployment remains unchanged while the supported hosted-web module, real app login, and private database are completed.
+- See [PUBLIK-INTEGRATION.md](PUBLIK-INTEGRATION.md) for architecture and remaining production limits. The historical foundation notes below describe the earlier preview.
 
 ## Working
 

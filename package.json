@@ -4,11 +4,16 @@
   "private": true,
   "description": "Sparrow college-preparation interactive foundation",
   "scripts": {
-    "start": "node sparrow/server.mjs",
+    "start": "node --use-system-ca --env-file-if-exists=.env sparrow/server.mjs",
     "check": "node --check sparrow/dist/app.js && node --check sparrow/dist/data.js",
-    "test": "node sparrow/smoke.mjs"
+    "test": "node sparrow/smoke.mjs",
+    "build": "node sparrow/build.mjs",
+    "test:integration": "node --use-system-ca --test sparrow/publik.test.mjs"
   },
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
   }
 }

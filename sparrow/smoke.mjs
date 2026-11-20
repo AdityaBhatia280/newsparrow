@@ -1,9 +1,11 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { spawn, execFileSync } from "node:child_process";
-import { createServer } from "./server.mjs";
+import { startMockProvider } from "./test-support/mock-provider.mjs";
+const provider = await startMockProvider({ claimed: true });
+const { createServer } = await import("./server.mjs");
 
 const browser = [
   process.env.CHROME_PATH,
@@ -128,12 +130,25 @@ try {
       `(()=>{const e=document.querySelector(${JSON.stringify(sel)});e.value=${JSON.stringify(value)};e.dispatchEvent(new Event(${JSON.stringify(event)},{bubbles:true}));})()`,
     );
   const state = () =>
-    ev(`JSON.parse(localStorage.getItem('sparrow.preview.v1'))`);
+    ev(
+      `JSON.parse(Object.entries(localStorage).find(([key])=>key.startsWith('sparrow.preview.v2:'))?.[1]||'null')`,
+    );
   const submit = async (sel) => {
     await ev(`document.querySelector(${JSON.stringify(sel)}).requestSubmit()`);
     await sleep(80);
   };
+  await wait(`document.querySelector(".public-hero h1")`);
+  assert.equal(await ev("!!document.querySelector('[data-gate=connect]')"), false);
+  await click("[data-enter-app]");
+  await wait(`document.querySelector('[data-gate=connect]')`);
+  assert.equal(await ev('!!document.querySelector(".hero")'), false);
+  await click("[data-gate=connect]");
+  await wait(`document.querySelector('.tour-page h1')`);
+  await click("[data-finish-tour]");
+  await wait(`document.querySelector('#onboarding-form')`);
+  await go("/");
   await wait(`document.querySelector('.hero h1')`);
+  passed.push("Public landing, publik gate, and first-visit walkthrough");
   assert.ok(
     (await ev("document.body.innerText")).includes("Illustrative preview"),
   );
@@ -244,9 +259,38 @@ try {
     "Help me plan a community project.",
   );
   assert.ok(
-    (await ev("document.body.innerText")).includes("AI connection not set up"),
+    (await ev("document.body.innerText")).includes(
+      "no verified opportunity records",
+    ),
   );
-  passed.push("Advisor draft retention and disconnected service state");
+  assert.equal(provider.calls.filter((c) => c.type === "chat").length, 0);
+  await click("#advisor-form [value=send]");
+  assert.ok(
+    (await ev('document.querySelector("#advisor-error").textContent')).includes(
+      "Confirm provider usage",
+    ),
+  );
+  await click("[name=confirmAi]");
+  await click("#advisor-form [value=send]");
+  await wait('document.querySelector("#answer-title")');
+  assert.equal((await state()).advisor.answer.summary, provider.answer.summary);
+  provider.state.chatMode = "402";
+  await click("[name=confirmAi]");
+  await click("#advisor-form [value=send]");
+  await wait(
+    'document.querySelector("#advisor-error").textContent.includes("Fixture allowance")',
+  );
+  assert.equal(
+    await ev('document.querySelectorAll("#advisor-error a").length'),
+    1,
+  );
+  assert.equal(
+    (await state()).advisor.draft,
+    "Help me plan a community project.",
+  );
+  passed.push(
+    "Explicit AI confirmation, saved validated response, and 402 draft retention",
+  );
   await click("[name=advisorCollege][value=rice]");
   await go("/advisor?opportunity=community-science");
   assert.equal(
@@ -255,6 +299,7 @@ try {
   );
   await click("[name=advisorContext]");
   await click('[data-advisor-task="Compare saved choices"]');
+  assert.equal((await state()).advisor.task, "Compare saved choices");
   assert.equal(
     await ev(
       'document.querySelector("[name=advisorContext]")?.checked || false',
@@ -337,9 +382,26 @@ try {
   );
   passed.push("Reduced-motion content remains visible");
   await go("/settings");
+  await ev(
+    `localStorage.setItem('sparrow.preview.v1',JSON.stringify({version:1,profile:{firstName:'Earlier preview'},step:0,onboarded:false,saved:{},colleges:{},submissions:[],advisor:{task:'Build a realistic plan',draft:'Earlier draft',opportunityIds:[],collegeIds:[]}}))`,
+  );
+  await go("/advisor");
+  await go("/settings");
+  await click("[data-import-preview]");
+  await click("dialog [value=cancel]");
+  assert.notEqual((await state()).profile.firstName, "Earlier preview");
+  await click("[data-import-preview]");
+  await click("dialog [value=remove]");
+  assert.equal((await state()).profile.firstName, "Earlier preview");
+  passed.push("Earlier preview data imports only after explicit confirmation");
   await click("[data-clear-data]");
   await click("dialog [value=remove]");
-  assert.equal(await ev("localStorage.getItem('sparrow.preview.v1')"), null);
+  assert.equal(
+    await ev(
+      "Object.keys(localStorage).some(k=>k.startsWith('sparrow.preview.v2:'))",
+    ),
+    false,
+  );
   passed.push("Full local data deletion");
   assert.deepEqual(errors, []);
   passed.push("No uncaught browser exceptions");
@@ -349,6 +411,7 @@ try {
   clearTimeout(guard);
   ws?.close();
   server.close();
+  await provider.close();
   try {
     if (process.platform === "win32")
       execFileSync("taskkill", ["/PID", String(child.pid), "/T", "/F"], {
@@ -358,3 +421,8 @@ try {
   } catch {}
   // The isolated temporary browser profile is retained for inspection; it contains only test inputs.
 }
+
+
+
+
+

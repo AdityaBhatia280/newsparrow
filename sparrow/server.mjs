@@ -2,6 +2,7 @@ import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import publikHandler from "../server/publik-handler.mjs";
 
 export const root = path.resolve(
   fileURLToPath(new URL("./dist/", import.meta.url)),
@@ -19,6 +20,7 @@ export function createServer() {
       const pathname = decodeURIComponent(
         new URL(req.url, "http://localhost").pathname,
       );
+      if (pathname === "/api/publik") return await publikHandler(req, res);
       const file = path.resolve(
         root,
         "." + (pathname === "/" ? "/index.html" : pathname),
@@ -50,7 +52,8 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   const port = Number(process.env.PORT) || 4173;
-  createServer().listen(port, "127.0.0.1", () =>
-    console.log(`Sparrow preview: http://127.0.0.1:${port}`),
+  const host=process.env.HOST||(process.env.K_SERVICE?'0.0.0.0':'127.0.0.1');
+  createServer().listen(port, host, () =>
+    console.log(`Sparrow server: http://${host}:${port}`),
   );
 }

@@ -1,7 +1,22 @@
-"use strict";
-(() => {
+﻿"use strict";
+(async () => {
+  const publik = window.SparrowPublik;
+  if (!location.hash || ["#/", "#features", "#ai"].includes(location.hash)) {
+    await new Promise((resolve) => {
+      document.querySelectorAll("[data-enter-app]").forEach((link) =>
+        link.addEventListener("click", resolve, { once: true }),
+      );
+
+    });
+  }
+  document.getElementById("public-site").hidden = true;
+  document.getElementById("main").hidden = false;
+  const signedIn = await publik.ensureSignedIn();
+  if (location.hash === "#/login") location.hash = "/";
+  document.getElementById("header").hidden = false;
+  document.getElementById("footer").hidden = false;
   const D = SPARROW_DATA,
-    KEY = "sparrow.preview.v1";
+    KEY = "sparrow.preview.v2:" + signedIn.principal;
   const $ = (s) => document.querySelector(s),
     esc = (s) =>
       String(s ?? "").replace(
@@ -20,6 +35,7 @@
     profile: {},
     step: 0,
     onboarded: false,
+    tourDone: false,
     saved: {},
     colleges: {},
     submissions: [],
@@ -28,6 +44,8 @@
       draft: "",
       opportunityIds: [],
       collegeIds: [],
+      answer: null,
+      providerRequestId: null,
     },
   });
   let state = clean(),
@@ -78,7 +96,7 @@
     clearTimeout(toast.timer);
     toast.timer = setTimeout(() => $("#toast").classList.remove("show"), 3400);
   }
-  const arrow = '<span class="arrow" aria-hidden="true">↗</span>';
+  const arrow = '<span class="arrow" aria-hidden="true">â†—</span>';
   const bird =
     '<svg aria-hidden="true" viewBox="0 0 40 40"><path fill="currentColor" d="M3 12 19 18 36 5 27 24 13 34 16 22Z"/></svg>';
   function icon(name) {
@@ -121,17 +139,20 @@
     const r = route(),
       home = r === "/";
     $("#header").innerHTML =
-      `<div class="wrap header-inner"><a class="brand" href="#/" aria-label="Sparrow home">${bird}sparrow</a><nav class="nav" aria-label="Main navigation">${[["Opportunities", "/opportunities"], ["Colleges", "/colleges"], [home ? "How it works" : "My opportunities", home ? "/how-it-works" : "/saved"], ...(!home ? [["Advisor", "/advisor"]] : [])].map(([n, p]) => `<a href="#${p}" ${r === p ? 'aria-current="page"' : ""}>${n}</a>`).join("")}</nav><div class="header-actions"><a class="text-link" href="#${home ? "/saved" : "/credits"}">${home ? "My opportunities" : "Credits"}</a>${btn(home ? "Start your path" : state.onboarded ? "Your profile" : "Start your path", state.onboarded ? "#/settings" : "#/start", "small")}<button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button></div></div>`;
+      `<div class="wrap header-inner"><a class="brand" href="#/" aria-label="Sparrow home">${bird}sparrow</a><nav class="nav" aria-label="Main navigation">${[["Opportunities", "/opportunities"], ["Colleges", "/colleges"], [home ? "How it works" : "My opportunities", home ? "/how-it-works" : "/saved"], ...(!home ? [["Advisor", "/advisor"]] : [])].map(([n, p]) => `<a href="#${p}" ${r === p ? 'aria-current="page"' : ""}>${n}</a>`).join("")}</nav><div class="header-actions"><a class="text-link" href="#${home ? "/saved" : "/credits"}">${home ? "My opportunities" : "Credits"}</a>${btn(home ? "Start your path" : state.onboarded ? "Your profile" : "Start your path", state.onboarded ? "#/settings" : "#/start", "small")}<button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">â˜°</button></div></div>`;
     $("#footer").innerHTML =
-      `<div class="wrap"><div class="footer-row"><a class="brand" href="#/">${bird}sparrow</a><div class="footer-links"><a href="#/opportunities">Opportunities</a><a href="#/contribute">Add an opportunity</a><a href="#/settings">Profile & local data</a><a href="#/credits">Credits</a></div></div><div class="footer-bottom"><p>Interactive foundation · Your data stays in this browser.</p><a class="text-link" href="#top" data-top>Back to top ↑</a></div></div>`;
+      `<div class="wrap"><div class="footer-row"><a class="brand" href="#/">${bird}sparrow</a><div class="footer-links"><a href="#/opportunities">Opportunities</a><a href="#/contribute">Add an opportunity</a><a href="#/settings">Profile & local data</a><a href="#/credits">Credits</a></div></div><div class="footer-bottom"><p>Interactive foundation Â· Your data stays in this browser.</p><a class="text-link" href="#top" data-top>Back to top â†‘</a></div></div>`;
   }
   function mini(o) {
-    return `<div class="mini-card"><div class="mini-head">${symbol(o)}<div><h4>${o.title}</h4><p>${o.type} · ${o.interest}</p></div></div><div class="mini-bottom"><span class="tag">${o.mode}</span><span>Grades ${o.grades[0]}–12</span><span>· ${o.cost}</span>${icon("bookmark")}</div></div>`;
+    return `<div class="mini-card"><div class="mini-head">${symbol(o)}<div><h4>${o.title}</h4><p>${o.type} Â· ${o.interest}</p></div></div><div class="mini-bottom"><span class="tag">${o.mode}</span><span>Grades ${o.grades[0]}â€“12</span><span>Â· ${o.cost}</span>${icon("bookmark")}</div></div>`;
   }
   function landing() {
-    return `<section class="hero" data-enter><div class="wrap hero-grid"><div><div class="eyebrow">A next step, on your terms</div><h1>A little direction.<br>A world of<br><em>possibility.</em></h1><p class="lead">Find extracurriculars and awards, explore colleges, and keep your applications moving. Make room for what interests you.</p><div class="actions">${btn('Start your path <span aria-hidden="true">→</span>', "#/start")}<a class="text-link" href="#/opportunities">Browse opportunities ${arrow}</a></div><p class="hero-note">${icon("check")} Free organization. Built for grades 9–12.</p></div><div class="hero-art" data-enter-media><div class="orbit"></div><span class="hero-stamp">Illustrative preview</span><div class="app-frame"><div class="frame-top"><strong>Your next chapter</strong><span class="frame-label">Example collection</span></div><div class="frame-heading"><h3>Room to explore.</h3><span>Made for your interests</span></div>${mini(D.opportunities[0])}${mini(D.opportunities[1])}${mini(D.opportunities[2])}<div class="saved-cue"><span class="check-disc">✓</span><div><strong>One possibility. One next step.</strong><p>Example task: draft a statement of interest</p></div></div></div></div></div></section>
-<section class="section white" id="how-it-works"><div class="wrap"><div class="section-heading"><div><p class="kicker">From curious to getting started</p><h2>A path that starts with you.</h2></div><p>You don't need a chosen career or a finished plan. Start with an interest, and take it from there.</p></div><div class="steps"><article class="step"><div class="step-number">01 / YOUR STARTING POINT</div><h3>Tell us about you.</h3><p>Your interests, time, and budget help you narrow down what to explore.</p><div class="step-visual"><span class="small muted">I'm interested in…</span><div class="chips"><span class="chip active">Neuroscience ✓</span><span class="chip">Arts</span><span class="chip">Computing</span><span class="chip">Still exploring</span></div></div></article><article class="step"><div class="step-number">02 / YOUR POSSIBILITIES</div><h3>Find something that fits.</h3><p>Look through programs, volunteering, competitions, and awards in one place.</p><div class="step-visual"><div class="mini-head">${symbol(D.opportunities[0])}<div><strong class="small">Community Science Lab</strong><p class="small muted">Fictional example</p></div></div><div class="chips"><span class="tag">Virtual</span><span class="tag">Free</span></div></div></article><article class="step"><div class="step-number">03 / YOUR NEXT MOVE</div><h3>Turn interest into action.</h3><p>Save a possibility, set your next task, and keep your application moving.</p><div class="step-visual"><div class="line-item"><span class="check-disc">✓</span> Save an opportunity</div><div class="line-item"><span aria-hidden="true">☐</span> Draft a statement of interest</div><div class="line-item"><span aria-hidden="true">☐</span> Review the requirements</div></div></article></div></div></section>
-<section class="section" data-moment="word-highlight"><div class="wrap credit-split"><div class="credit-copy"><p class="kicker">A little clarity on credits</p><h2 class="mo-wh__text">Your plans have room to grow. Your <strong>organization stays free.</strong></h2><p>Save opportunities, keep college lists, and track applications. Personalized AI guidance will use clearly explained credits when connected.</p><a class="text-link" href="#/credits">See how credits work ${arrow}</a></div><div class="credit-panel"><div class="credit-row"><h3>The everyday essentials <span class="free-label">Free</span></h3><p>Browse, save, shortlist, and track your next steps.</p></div><div class="credit-row"><h3>Guidance when you need it</h3><p>Planned AI actions include comparing choices and breaking projects into milestones. AI is not connected in this preview.</p></div><div class="credit-row"><h3>Your work, your pace</h3><p>No streaks to maintain. Come back when you're ready to take the next step.</p></div></div></div></section>`;
+    return `<section class="hero" data-enter><div class="wrap hero-grid"><div><div class="eyebrow">A next step, on your terms</div><h1>A little direction.<br>A world of<br><em>possibility.</em></h1><p class="lead">Find extracurriculars and awards, explore colleges, and keep your applications moving. Make room for what interests you.</p><div class="actions">${btn('Start your path <span aria-hidden="true">â†’</span>', "#/start")}<a class="text-link" href="#/opportunities">Browse opportunities ${arrow}</a></div><p class="hero-note">${icon("check")} Free organization. Built for grades 9â€“12.</p></div><div class="hero-art" data-enter-media><div class="orbit"></div><span class="hero-stamp">Illustrative preview</span><div class="app-frame"><div class="frame-top"><strong>Your next chapter</strong><span class="frame-label">Example collection</span></div><div class="frame-heading"><h3>Room to explore.</h3><span>Made for your interests</span></div>${mini(D.opportunities[0])}${mini(D.opportunities[1])}${mini(D.opportunities[2])}<div class="saved-cue"><span class="check-disc">âœ“</span><div><strong>One possibility. One next step.</strong><p>Example task: draft a statement of interest</p></div></div></div></div></div></section>
+<section class="section white" id="how-it-works"><div class="wrap"><div class="section-heading"><div><p class="kicker">From curious to getting started</p><h2>A path that starts with you.</h2></div><p>You don't need a chosen career or a finished plan. Start with an interest, and take it from there.</p></div><div class="steps"><article class="step"><div class="step-number">01 / YOUR STARTING POINT</div><h3>Tell us about you.</h3><p>Your interests, time, and budget help you narrow down what to explore.</p><div class="step-visual"><span class="small muted">I'm interested inâ€¦</span><div class="chips"><span class="chip active">Neuroscience âœ“</span><span class="chip">Arts</span><span class="chip">Computing</span><span class="chip">Still exploring</span></div></div></article><article class="step"><div class="step-number">02 / YOUR POSSIBILITIES</div><h3>Find something that fits.</h3><p>Look through programs, volunteering, competitions, and awards in one place.</p><div class="step-visual"><div class="mini-head">${symbol(D.opportunities[0])}<div><strong class="small">Community Science Lab</strong><p class="small muted">Fictional example</p></div></div><div class="chips"><span class="tag">Virtual</span><span class="tag">Free</span></div></div></article><article class="step"><div class="step-number">03 / YOUR NEXT MOVE</div><h3>Turn interest into action.</h3><p>Save a possibility, set your next task, and keep your application moving.</p><div class="step-visual"><div class="line-item"><span class="check-disc">âœ“</span> Save an opportunity</div><div class="line-item"><span aria-hidden="true">â˜</span> Draft a statement of interest</div><div class="line-item"><span aria-hidden="true">â˜</span> Review the requirements</div></div></article></div></div></section>
+<section class="section" data-moment="word-highlight"><div class="wrap credit-split"><div class="credit-copy"><p class="kicker">A little clarity on credits</p><h2 class="mo-wh__text">Your plans have room to grow. Your <strong>organization stays free.</strong></h2><p>Save opportunities, keep college lists, and track applications. Personalized AI requests use your selected publik provider after confirmation.</p><a class="text-link" href="#/credits">See how credits work ${arrow}</a></div><div class="credit-panel"><div class="credit-row"><h3>The everyday essentials <span class="free-label">Free</span></h3><p>Browse, save, shortlist, and track your next steps.</p></div><div class="credit-row"><h3>Guidance when you need it</h3><p>AI can help with general planning, project milestones, and draft feedback. AI requests use your selected publik provider after confirmation.</p></div><div class="credit-row"><h3>Your work, your pace</h3><p>No streaks to maintain. Come back when you're ready to take the next step.</p></div></div></div></section>`;
+  }
+  function tour() {
+    return page(`<section class="tour-page"><p class="kicker">Welcome to Sparrow</p><h1>See what you can do here.</h1><p>Take a quick look around, then start exploring at your own pace.</p><div class="tour-grid"><article><span>Explore</span><h2>Find possibilities</h2><p>Browse illustrative opportunities and explore colleges.</p></article><article><span>Organize</span><h2>Keep moving</h2><p>Save ideas, track applications, and set your next task.</p></article><article><span>Advisor</span><h2>Ask for help</h2><p>Send a planning question or draft when you want AI feedback.</p></article></div><div class="actions"><a class="btn" href="#/start" data-finish-tour>Build my profile</a><a class="btn secondary" href="#/opportunities" data-finish-tour>Explore opportunities</a></div></section>`);
   }
   function saveButton(o) {
     return `<button class="icon-button ${state.saved[o.id] ? "saved" : ""}" data-save="${o.id}" aria-label="${state.saved[o.id] ? "Unsave" : "Save"} ${esc(o.title)}" aria-pressed="${!!state.saved[o.id]}">${icon("bookmark")}</button>`;
@@ -146,11 +167,11 @@
     if (p.weeklyHours && o.hours > Number(p.weeklyHours))
       reasons.push("Example time commitment exceeds your weekly hours");
     return (
-      reasons.join(" · ") || "Explore the details and check your constraints."
+      reasons.join(" Â· ") || "Explore the details and check your constraints."
     );
   }
   function opCard(o) {
-    return `<article class="op-card card"><div class="card-top">${symbol(o)}${saveButton(o)}</div><p class="provider">${o.provider}</p><h2><a href="#/opportunities/${o.id}">${o.title}</a></h2><p>${fit(o)}</p><div class="card-meta"><span>${o.type} · ${o.mode}</span><span>Grades ${o.grades[0]}–12</span><span>Cost: ${o.cost}</span><span>Deadline: not applicable</span><span>${o.location}</span><span>~${o.hours} hrs/week, example</span></div><div class="card-bottom"><span>Fictional example</span><a class="text-link" href="#/opportunities/${o.id}">View details ${arrow}</a></div></article>`;
+    return `<article class="op-card card"><div class="card-top">${symbol(o)}${saveButton(o)}</div><p class="provider">${o.provider}</p><h2><a href="#/opportunities/${o.id}">${o.title}</a></h2><p>${fit(o)}</p><div class="card-meta"><span>${o.type} Â· ${o.mode}</span><span>Grades ${o.grades[0]}â€“12</span><span>Cost: ${o.cost}</span><span>Deadline: not applicable</span><span>${o.location}</span><span>~${o.hours} hrs/week, example</span></div><div class="card-bottom"><span>Fictional example</span><a class="text-link" href="#/opportunities/${o.id}">View details ${arrow}</a></div></article>`;
   }
   function filtered() {
     return D.opportunities.filter(
@@ -193,7 +214,7 @@
     const o = D.opportunities.find((o) => o.id === id);
     if (!o) return notFound();
     return page(
-      `<a class="back" href="#/opportunities">← All opportunities</a>` +
+      `<a class="back" href="#/opportunities">â† All opportunities</a>` +
         pageHead(
           `${o.type} / Fictional example`,
           esc(o.title),
@@ -208,14 +229,14 @@
           ["Eligible grades", o.grades.join(", ")],
           ["Cost", o.cost],
           ["Time commitment", `~${o.hours} hours/week, illustrative`],
-          ["Deadline / cycle", "Not applicable — fictional"],
+          ["Deadline / cycle", "Not applicable â€” fictional"],
           ["Source status", "Unverified example"],
           ["Last checked", "Not applicable"],
         ]
           .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
           .join(
             "",
-          )}</dl><section class="detail-block"><h2>What you could explore</h2><p>${o.summary}</p></section><section class="detail-block"><h2>Example preparation checklist</h2><ul>${o.requirements.map((r) => `<li>${r}</li>`).join("")}</ul></section><section class="detail-block"><h2>How this relates to your profile</h2><p>${fit(o)} Interest alone does not establish eligibility. Live listings will need reviewed official sources.</p><a class="text-link" href="#/settings">Review your profile ${arrow}</a></section><a class="text-link" href="#/contribute?correction=${o.id}">Suggest a correction ${arrow}</a></div><aside class="side-panel"><h2>Make a next step.</h2><p>Try saving this example and planning a personal task.</p><button class="btn secondary" data-save="${o.id}">${state.saved[o.id] ? "Remove saved example" : "Save opportunity"}</button><button class="btn" data-track="${o.id}">Track application <span aria-hidden="true">→</span></button><button class="btn secondary" disabled>Official application unavailable</button><a class="btn secondary" href="#/advisor?opportunity=${o.id}">Ask the advisor</a><p>Your saved status and notes stay in this browser.</p></aside></div>`,
+          )}</dl><section class="detail-block"><h2>What you could explore</h2><p>${o.summary}</p></section><section class="detail-block"><h2>Example preparation checklist</h2><ul>${o.requirements.map((r) => `<li>${r}</li>`).join("")}</ul></section><section class="detail-block"><h2>How this relates to your profile</h2><p>${fit(o)} Interest alone does not establish eligibility. Live listings will need reviewed official sources.</p><a class="text-link" href="#/settings">Review your profile ${arrow}</a></section><a class="text-link" href="#/contribute?correction=${o.id}">Suggest a correction ${arrow}</a></div><aside class="side-panel"><h2>Make a next step.</h2><p>Try saving this example and planning a personal task.</p><button class="btn secondary" data-save="${o.id}">${state.saved[o.id] ? "Remove saved example" : "Save opportunity"}</button><button class="btn" data-track="${o.id}">Track application <span aria-hidden="true">â†’</span></button><button class="btn secondary" disabled>Official application unavailable</button><a class="btn secondary" href="#/advisor?opportunity=${o.id}">Ask the advisor</a><p>Your saved status and notes stay in this browser.</p></aside></div>`,
     );
   }
   function choices(label, name, values, current = [], single = false) {
@@ -260,7 +281,7 @@
           "Basics",
           [p.firstName, p.grade ? `Grade ${p.grade}` : "", p.country, p.region]
             .filter(Boolean)
-            .join(" · "),
+            .join(" Â· "),
         ],
         [
           "Interests",
@@ -277,7 +298,7 @@
             p.travel,
           ]
             .filter(Boolean)
-            .join(" · ") || "No preferences yet",
+            .join(" Â· ") || "No preferences yet",
         ],
         [
           "Experience",
@@ -293,7 +314,7 @@
           "",
         )}</div><p class="small muted" style="margin-top:20px">Your grade, interests, time, and budget inform simple fit notes. Editing this profile preserves your saved work.</p>`;
     return page(
-      `<div class="onboarding-shell">${pageHead("Try the local preview", "Your path starts here.", "A few details can help you decide what to explore. You can change them anytime.")}${notice("This is a browser-local preview, not a secure account. Use sample information and avoid sensitive personal details.")}<div class="form-card"><div class="progress-row"><span>Step ${s + 1} of 6</span><span>Progress saved in this browser</span></div><div class="progress"><span style="width:${((s + 1) / 6) * 100}%"></span></div><h2>${STEPS[s]}</h2><p>${["Start with the details you want to use in this preview.", "You can have more than one interest. You can also be figuring it out.", "Make space for school, rest, and the things you already do.", "A short, self-written summary is enough.", "Choose what would make your next few weeks useful.", "Review your profile before browsing."][s]}</p><form id="onboarding-form">${inner}<div id="onboarding-error" class="error" role="alert"></div><div class="actions">${s ? '<button class="btn secondary" type="button" data-back-step>Back</button>' : '<a class="btn secondary" href="#/">Back to Sparrow</a>'}<button class="btn" type="submit">${s === 5 ? "Save & find opportunities" : "Save & continue"} <span aria-hidden="true">→</span></button></div></form></div></div>`,
+      `<div class="onboarding-shell">${pageHead("Try the local preview", "Your path starts here.", "A few details can help you decide what to explore. You can change them anytime.")}${notice("Sign-in uses publik. Planning data stays in this browser and does not sync. Use sample information and avoid sensitive personal details.")}<div class="form-card"><div class="progress-row"><span>Step ${s + 1} of 6</span><span>Progress saved in this browser</span></div><div class="progress"><span style="width:${((s + 1) / 6) * 100}%"></span></div><h2>${STEPS[s]}</h2><p>${["Start with the details you want to use in this preview.", "You can have more than one interest. You can also be figuring it out.", "Make space for school, rest, and the things you already do.", "A short, self-written summary is enough.", "Choose what would make your next few weeks useful.", "Review your profile before browsing."][s]}</p><form id="onboarding-form">${inner}<div id="onboarding-error" class="error" role="alert"></div><div class="actions">${s ? '<button class="btn secondary" type="button" data-back-step>Back</button>' : '<a class="btn secondary" href="#/">Back to Sparrow</a>'}<button class="btn" type="submit">${s === 5 ? "Save & find opportunities" : "Save & continue"} <span aria-hidden="true">â†’</span></button></div></form></div></div>`,
     );
   }
   function savedView() {
@@ -318,7 +339,7 @@
           ? entries
               .map(([id, v]) => {
                 const o = D.opportunities.find((o) => o.id === id);
-                return `<article class="saved-row"><div><div class="saved-title">${symbol(o)}<div><h2><a href="#/opportunities/${id}">${o.title}</a></h2><p>Fictional example · Saved ${new Date(v.savedAt).toLocaleDateString()}</p></div></div><div class="saved-fields">${textarea("Your private note", "note", v.note || "", `data-saved-field="note" data-id="${id}"`)}${field("Your personal due date", "due", v.due || "", "date", `data-saved-field="due" data-id="${id}"`)}</div><div class="tasks"><span class="small">Your next tasks</span>${(v.tasks || []).map((t) => `<div class="task-row"><label><input type="checkbox" data-task="${esc(t.id)}" data-id="${id}" ${t.done ? "checked" : ""}><span class="${t.done ? "done" : ""}">${esc(t.text)}</span></label><button class="task-delete" data-delete-task="${esc(t.id)}" data-id="${id}" aria-label="Delete task ${esc(t.text)}">×</button></div>`).join("")}<form class="task-form" data-task-form="${id}"><input aria-label="New task for ${esc(o.title)}" name="task" placeholder="Add one practical next step" maxlength="200" required><button class="btn secondary small" type="submit">Add task</button></form></div></div><div class="saved-side">${select("Application status", `status-${id}`, D.statuses, v.status)}<p class="small muted">Personal dates are separate from official deadlines.</p><button class="text-link task-delete" data-save="${id}">Remove saved item</button></div></article>`;
+                return `<article class="saved-row"><div><div class="saved-title">${symbol(o)}<div><h2><a href="#/opportunities/${id}">${o.title}</a></h2><p>Fictional example Â· Saved ${new Date(v.savedAt).toLocaleDateString()}</p></div></div><div class="saved-fields">${textarea("Your private note", "note", v.note || "", `data-saved-field="note" data-id="${id}"`)}${field("Your personal due date", "due", v.due || "", "date", `data-saved-field="due" data-id="${id}"`)}</div><div class="tasks"><span class="small">Your next tasks</span>${(v.tasks || []).map((t) => `<div class="task-row"><label><input type="checkbox" data-task="${esc(t.id)}" data-id="${id}" ${t.done ? "checked" : ""}><span class="${t.done ? "done" : ""}">${esc(t.text)}</span></label><button class="task-delete" data-delete-task="${esc(t.id)}" data-id="${id}" aria-label="Delete task ${esc(t.text)}">Ã—</button></div>`).join("")}<form class="task-form" data-task-form="${id}"><input aria-label="New task for ${esc(o.title)}" name="task" placeholder="Add one practical next step" maxlength="200" required><button class="btn secondary small" type="submit">Add task</button></form></div></div><div class="saved-side">${select("Application status", `status-${id}`, D.statuses, v.status)}<p class="small muted">Personal dates are separate from official deadlines.</p><button class="text-link task-delete" data-save="${id}">Remove saved item</button></div></article>`;
               })
               .join("")
           : `<div class="empty"><h2>${savedTab === "All saved" ? "Start with one possibility." : "No items with this status."}</h2><p>${savedTab === "All saved" ? "Save an example opportunity and give it a practical next step." : "Change an application status or view all saved items."}</p>${btn("Find opportunities", "#/opportunities")}</div>`),
@@ -360,12 +381,12 @@
     if (!c) return notFound();
     const v = state.colleges[id];
     return page(
-      `<a class="back" href="#/colleges">← All colleges</a>` +
+      `<a class="back" href="#/colleges">â† All colleges</a>` +
         pageHead("College Explorer / Example record", c.name, c.city) +
         notice(
-          "This is an illustrative directory record, not a complete or recently verified college profile. Check the college’s official website for current information.",
+          "This is an illustrative directory record, not a complete or recently verified college profile. Check the collegeâ€™s official website for current information.",
         ) +
-        `<div class="detail-layout"><div><div class="detail-block"><h2>Get to know the college.</h2><p>Explore official majors, application requirements, and financial aid information on the institution's website. Note the dates and sources of anything you plan to rely on.</p><a class="text-link" href="${c.url}" target="_blank" rel="noopener noreferrer">Open official college website ${arrow}<span class="small">(external)</span></a></div><div class="detail-block"><h2>Questions to take with you</h2><ul><li>Which programs connect with your interests?</li><li>What does financial aid require, and when?</li><li>What would you like to learn about student life?</li></ul><p>Current tuition, application dates, and source verification dates: not recorded.</p></div></div><aside class="side-panel"><h2>Your college list</h2><button class="btn" data-college="${id}">${v ? "Remove from shortlist" : "Save to shortlist"}</button>${v ? `<div class="college-notes">${textarea("Your notes", "collegeNote", v.note || "", `data-college-note="${id}" placeholder="Questions, interests, things to check…"`)}</div>` : "<p>Save this college to keep your own notes.</p>"}<a class="btn secondary" href="#/advisor?college=${id}">Review advisor context</a></aside></div>`,
+        `<div class="detail-layout"><div><div class="detail-block"><h2>Get to know the college.</h2><p>Explore official majors, application requirements, and financial aid information on the institution's website. Note the dates and sources of anything you plan to rely on.</p><a class="text-link" href="${c.url}" target="_blank" rel="noopener noreferrer">Open official college website ${arrow}<span class="small">(external)</span></a></div><div class="detail-block"><h2>Questions to take with you</h2><ul><li>Which programs connect with your interests?</li><li>What does financial aid require, and when?</li><li>What would you like to learn about student life?</li></ul><p>Current tuition, application dates, and source verification dates: not recorded.</p></div></div><aside class="side-panel"><h2>Your college list</h2><button class="btn" data-college="${id}">${v ? "Remove from shortlist" : "Save to shortlist"}</button>${v ? `<div class="college-notes">${textarea("Your notes", "collegeNote", v.note || "", `data-college-note="${id}" placeholder="Questions, interests, things to checkâ€¦"`)}</div>` : "<p>Save this college to keep your own notes.</p>"}<a class="btn secondary" href="#/advisor?college=${id}">Review advisor context</a></aside></div>`,
     );
   }
   const advisorTasks = [
@@ -386,6 +407,12 @@
       "Get clarity feedback while keeping your own authorship.",
     ],
   ];
+  let advisorBusy = false;
+  function advisorAnswer() {
+    const a = state.advisor.answer;
+    if (!a) return "";
+    return `<section class="advisor-answer detail-block" aria-labelledby="answer-title"><div class="page-head"><h2 id="answer-title">Saved advisor response</h2><button class="btn secondary small" data-delete-answer>Delete response</button></div><p>${esc(a.summary)}</p><div class="form-stack" style="margin-top:24px">${a.recommendations.map((r) => `<article class="side-panel"><h3>${esc(r.title)}</h3><p>${esc(r.reason)}</p>${r.estimatedMinutes !== null ? `<p class="small">Estimated time: ${r.estimatedMinutes} minutes</p>` : ""}${r.uncertainties.length ? `<ul>${r.uncertainties.map((u) => `<li>${esc(u)}</li>`).join("")}</ul>` : ""}</article>`).join("")}</div>${a.followUpQuestion ? `<p style="margin-top:24px"><strong>One question:</strong> ${esc(a.followUpQuestion)}</p>` : ""}${a.warnings.length ? `<ul>${a.warnings.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>` : ""}<p class="small muted" style="margin-top:24px">AI suggestions can be wrong. This response is saved only in this browser. ${state.advisor.providerRequestId ? "Provider request: " + esc(state.advisor.providerRequestId) : ""}</p></section>`;
+  }
   function advisor() {
     const p = state.profile,
       q = new URLSearchParams(location.hash.split("?")[1] || ""),
@@ -417,9 +444,9 @@
         "Choose a task and prepare the context you would like your advisor to consider.",
       ) +
         notice(
-          "<strong>AI connection not set up.</strong> You can prepare and save a local draft. No AI request is sent, no advice is generated, and no credits are charged.",
+          "AI is available through publik after an explicit request. This preview has no verified opportunity records, so guidance is limited to general planning and draft feedback. Fictional listings cannot support real application advice.",
         ) +
-        `<div class="advisor-layout"><div><div class="advisor-actions">${advisorTasks.map(([t, d]) => `<button class="action-card ${state.advisor.task === t ? "active" : ""}" data-advisor-task="${t}"><span class="symbol peach">${icon("spark")}</span><strong>${t}</strong><p>${d}</p></button>`).join("")}</div><form id="advisor-form" class="advisor-draft"><h2 style="font-size:25px">Your request draft</h2>${textarea("What would you like help with?", "draft", state.advisor.draft, 'placeholder="For example: help me choose a project that fits three hours a week."')}<div class="actions"><button class="btn secondary" type="submit">Save local draft</button><button class="btn" disabled type="button">AI unavailable</button></div><p class="small muted" style="margin-top:14px">Credit estimate unavailable until the provider is connected.</p></form></div><aside class="side-panel"><h2>Review your context.</h2><p>Only include the information needed for your task. Nothing here is sent in this preview.</p><div class="review-list" style="margin-top:25px"><div class="review-row"><strong>Your profile</strong><p>${esc([p.grade ? `Grade ${p.grade}` : "No grade added", ...(p.interests || []), p.weeklyHours ? `${p.weeklyHours} hrs/week` : "", p.budget].filter(Boolean).join(" · "))}</p></div><fieldset><legend>Example opportunities</legend>${
+        `<div class="advisor-layout"><div><div class="advisor-actions">${advisorTasks.map(([t, d]) => `<button class="action-card ${state.advisor.task === t ? "active" : ""}" data-advisor-task="${t}" ${advisorBusy ? "disabled" : ""}><span class="symbol peach">${icon("spark")}</span><strong>${t}</strong><p>${d}</p></button>`).join("")}</div><form id="advisor-form" class="advisor-draft"><h2 style="font-size:25px">Your request draft</h2>${textarea("What would you like help with?", "draft", state.advisor.draft, 'placeholder="For example: help me choose a project that fits three hours a week."')}<label class="check-label" style="margin-top:20px"><input type="checkbox" name="confirmAi"> I confirm this AI request uses my selected provider and may consume its allowance.</label><div class="actions"><button class="btn secondary" type="submit" value="save">Save local draft</button><button class="btn" type="submit" value="send" ${advisorBusy || !publik.info.providerReady ? "disabled" : ""}>${advisorBusy ? "Request in progressâ€¦" : "Send to advisor"}</button></div><div id="advisor-error" class="error" role="alert"></div><p class="small muted" style="margin-top:14px">${publik.info.providerReady ? "The exact usage is determined by the provider. No Sparrow reward credits are spent." : "Add a personal publik key or connect your plan in Settings to send a request."}</p><p class="small muted" id="advisor-providers">AI providers: ${esc(publik.info.providers.join(", ") || "check your publik account for the current provider list")}.</p></form></div><aside class="side-panel"><h2>Review your context.</h2><p>Your task and draft are sent only when you confirm and choose Send. Include profile fields below only if useful.</p><div class="review-list" style="margin-top:25px"><div class="review-row"><label class="check-label"><input type="checkbox" name="includeProfile" checked> Include grade, interests, region, weekly hours, budget, and goals</label><p>${esc([p.grade ? `Grade ${p.grade}` : "No grade added", ...(p.interests || []), p.region || "", p.weeklyHours ? `${p.weeklyHours} hrs/week` : "", p.budget, ...(p.goals || [])].filter(Boolean).join(" Â· "))}</p><label class="check-label"><input type="checkbox" name="includeExperience"> Include my experience summary (first 1,500 characters)</label><p>${esc((p.experience || "No experience summary added.").slice(0, 1500))}</p></div><fieldset><legend>Saved examples (local context only)</legend>${
           D.opportunities
             .filter(
               (o) =>
@@ -444,7 +471,7 @@
             )
             .join("") ||
           '<p class="small muted">Save a college to prepare a comparison.</p>'
-        }</fieldset></div><a class="text-link" href="#/settings">Edit your profile ${arrow}</a><p>Fictional opportunity records cannot support real application advice. Production guidance requires verified facts.</p></aside></div>`,
+        }</fieldset></div><a class="text-link" href="#/settings">Edit your profile ${arrow}</a><p>Selected examples and college records remain local and are not sent as verified facts. Your profile name, account identifier, saved notes, and unrelated records are not automatically included.</p></aside></div>${advisorAnswer()}`,
     );
   }
   function contribute() {
@@ -460,7 +487,7 @@
         notice(
           "Submissions are stored only in this browser. No page is fetched, nothing is published, and no moderation or credit reward takes place.",
         ) +
-        `<div class="detail-layout"><div><form id="contribute-form" class="form-stack">${field("Official HTTPS URL", "url", edit?.url || "", "url", 'required maxlength="2000" placeholder="https://…"')}${select("Opportunity type", "type", [...new Set(D.opportunities.map((o) => o.type))], edit?.type, "Choose a type")}${field("Opportunity title (optional)", "title", edit?.title, "text", 'maxlength="180"')}${textarea("Notes or suggested correction (optional)", "notes", edit?.notes || "")}<label class="check-label"><input name="confirm" type="checkbox" required ${edit ? "checked" : ""}> I believe this link is an official public source.</label>${correction ? `<input name="correction" type="hidden" value="${esc(correction)}">` : ""}<div id="submission-error" class="error" role="alert"></div><div class="actions"><button class="btn" type="submit">${edit ? "Save submission changes" : "Save pending submission"}</button>${edit ? '<button class="btn secondary" type="button" data-cancel-edit>Cancel edit</button>' : ""}</div></form></div><aside class="side-panel"><h2>What happens next?</h2><p>In production, the source will be safely fetched and extracted into a draft for review. A moderator must approve it before publication.</p><p>Rewards require an approved, useful, unique contribution and a funded policy. Pending submissions do not earn credits.</p><a class="text-link" href="#/credits">See credit details ${arrow}</a></aside></div><section class="submissions"><h2 style="font-size:28px">Your local submissions</h2>${state.submissions.length ? state.submissions.map((s) => `<article class="submission-row"><div><h3>${esc(s.title || "Untitled opportunity")}</h3><p>${esc(s.url)}</p><p>${esc(s.type)} · ${new Date(s.updatedAt).toLocaleDateString()}${s.correction ? " · Correction proposal" : ""}</p><span class="tag">Pending locally — not sent</span></div><div class="actions" style="margin-top:0"><button class="btn secondary small" data-edit-submission="${s.id}">Edit submission</button><button class="text-link task-delete" data-delete-submission="${s.id}">Delete</button></div></article>`).join("") : '<p class="muted" style="margin-top:20px">Your saved submissions will appear here.</p>'}</section>`,
+        `<div class="detail-layout"><div><form id="contribute-form" class="form-stack">${field("Official HTTPS URL", "url", edit?.url || "", "url", 'required maxlength="2000" placeholder="https://â€¦"')}${select("Opportunity type", "type", [...new Set(D.opportunities.map((o) => o.type))], edit?.type, "Choose a type")}${field("Opportunity title (optional)", "title", edit?.title, "text", 'maxlength="180"')}${textarea("Notes or suggested correction (optional)", "notes", edit?.notes || "")}<label class="check-label"><input name="confirm" type="checkbox" required ${edit ? "checked" : ""}> I believe this link is an official public source.</label>${correction ? `<input name="correction" type="hidden" value="${esc(correction)}">` : ""}<div id="submission-error" class="error" role="alert"></div><div class="actions"><button class="btn" type="submit">${edit ? "Save submission changes" : "Save pending submission"}</button>${edit ? '<button class="btn secondary" type="button" data-cancel-edit>Cancel edit</button>' : ""}</div></form></div><aside class="side-panel"><h2>What happens next?</h2><p>In production, the source will be safely fetched and extracted into a draft for review. A moderator must approve it before publication.</p><p>Rewards require an approved, useful, unique contribution and a funded policy. Pending submissions do not earn credits.</p><a class="text-link" href="#/credits">See credit details ${arrow}</a></aside></div><section class="submissions"><h2 style="font-size:28px">Your local submissions</h2>${state.submissions.length ? state.submissions.map((s) => `<article class="submission-row"><div><h3>${esc(s.title || "Untitled opportunity")}</h3><p>${esc(s.url)}</p><p>${esc(s.type)} Â· ${new Date(s.updatedAt).toLocaleDateString()}${s.correction ? " Â· Correction proposal" : ""}</p><span class="tag">Pending locally â€” not sent</span></div><div class="actions" style="margin-top:0"><button class="btn secondary small" data-edit-submission="${s.id}">Edit submission</button><button class="text-link task-delete" data-delete-submission="${s.id}">Delete</button></div></article>`).join("") : '<p class="muted" style="margin-top:20px">Your saved submissions will appear here.</p>'}</section>`,
     );
   }
   function credits() {
@@ -470,8 +497,32 @@
         "A clear view of credits.",
         "Free organization stays free. Personalized AI actions will require an explicit credit entitlement.",
       ) +
-        `<div class="wallet"><section class="balance-card"><p>Available Sparrow credits</p><div class="balance-number">0</div><p>No live wallet is connected. Sparrow credits are not cash or official publik API credits.</p><div class="actions"><button class="btn" disabled>Purchases unavailable</button></div></section><section class="side-panel"><h2>Share a possibility.</h2><p>You can copy a link to this preview. An invite does not grant credits or share your profile, notes, or account.</p><button class="btn secondary" data-share>Copy preview invite</button><p>Credit gifts and transfers are deferred. Never share a password or API key.</p></section></div><section class="ledger"><h2 style="font-size:28px">Credit categories</h2>${["Purchased entitlement", "Contribution rewards", "Promotional allowance", "Reserved usage", "Completed spend", "Refunds & expiry adjustments"].map((c) => `<div class="ledger-row"><span>${c}</span><span>0 credits</span></div>`).join("")}<p class="small muted" style="margin-top:20px">Preview values are fixed at zero. Production balances require a server-controlled transaction ledger.</p></section><section class="detail-block"><h2>Usage history</h2><p>No transactions. AI, billing, and credit transfers are not connected.</p></section>`,
+        `<div class="wallet"><section class="balance-card"><p>Available Sparrow credits</p><div class="balance-number">0</div><p>No live wallet is connected. Sparrow credits are not cash or official publik API credits.</p><div class="actions"><button class="btn" disabled>Purchases unavailable</button></div></section><section class="side-panel"><h2>Share a possibility.</h2><p>You can copy a link to this preview. An invite does not grant credits or share your profile, notes, or account.</p><button class="btn secondary" data-share>Copy preview invite</button><p>Credit gifts and transfers are deferred. Never share a password or API key.</p></section></div><section class="ledger"><h2 style="font-size:28px">Credit categories</h2>${["Purchased entitlement", "Contribution rewards", "Promotional allowance", "Reserved usage", "Completed spend", "Refunds & expiry adjustments"].map((c) => `<div class="ledger-row"><span>${c}</span><span>0 credits</span></div>`).join("")}<p class="small muted" style="margin-top:20px">Preview values are fixed at zero. Production balances require a server-controlled transaction ledger.</p></section><section class="detail-block"><h2>Usage history</h2><p>No Sparrow transactions. Publik AI usage is billed separately by your selected provider. Sparrow purchases and transfers remain unavailable.</p></section>`,
     );
+  }
+  function showProviderError(error) {
+    const target = $("#provider-feedback");
+    target.textContent = error.message;
+    if (error.topUpUrl) {
+      const a = document.createElement("a");
+      a.href = error.topUpUrl;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.className = "text-link";
+      a.textContent = "Open publik";
+      target.append(document.createElement("br"), a);
+    }
+  }
+  function providerSettings() {
+    const a = publik.info;
+    return `<section class="side-panel" style="margin-top:30px"><h2>Sign-in & AI provider</h2><p>Signed in with publik${a.handle ? " as @" + esc(a.handle) : ""}. Provider choice: ${a.choice === "publik" ? "Connected publik plan" : "Personal publik API key"}.</p>${a.choice === "publik" && a.remainingPercent !== null ? `<p>${a.remainingPercent}% of your plan allowance remains.</p>` : ""}<div class="actions"><button class="btn secondary" data-provider="publik">Connect publik plan</button><button class="btn secondary" data-provider="own_key">Use my own key</button><button class="btn secondary" data-sign-out>Sign out of Sparrow</button></div><form id="personal-key-form" class="form-stack" style="margin-top:24px"><label class="field">Personal publik API key<input name="personalKey" type="password" autocomplete="off" spellcheck="false" required maxlength="260"><span class="hint">Sent only to Sparrow's server and kept in your encrypted session, never localStorage.</span></label><button class="btn secondary" type="submit">Save personal key</button></form><label class="check-label" style="margin-top:24px"><input type="checkbox" name="usageConsent" ${a.usageEnabled ? "checked" : ""}> Allow official publik usage counting</label><p id="provider-feedback" role="status" class="small muted"></p><p>Signing out leaves this account's local work in this browser. Other sign-ins receive separate workspaces. There is no cross-device profile storage yet.</p></section>`;
+  }
+  function legacyImportControl() {
+    try {
+      if (localStorage.getItem("sparrow.preview.v1"))
+        return '<section class="side-panel" style="margin-top:30px"><h2>Earlier browser preview</h2><p>Your earlier unsigned preview is still stored in this browser. Import it only if it is your work. This replaces the current local workspace, and does not send it to AI.</p><button class="btn secondary" data-import-preview>Import earlier preview</button></section>';
+    } catch {}
+    return "";
   }
   function settings() {
     const p = state.profile;
@@ -479,17 +530,17 @@
       pageHead(
         "Your profile & your data",
         "Keep your path yours.",
-        "Review the details you chose to store and manage this browser’s preview data.",
+        "Review the details you chose to store and manage this browserâ€™s preview data.",
       ) +
         notice(
-          "This preview has no authenticated account or cross-device sync. Use sample inputs and avoid sensitive information.",
+          "Sign-in is verified by publik. Profile data, saved work, submissions, and plans remain browser-local; they do not sync across devices. Use sample inputs and avoid sensitive information.",
         ) +
-        `<div class="settings-grid"><section class="side-panel"><h2>${p.firstName ? esc(p.firstName) + "’s starting point" : "Your starting point"}</h2><p>${esc([p.grade ? `Grade ${p.grade}` : "Grade not set", p.region || p.country].filter(Boolean).join(" · "))}</p><p>${esc((p.interests || []).join(", ") || "Interests not set yet")}</p><p>${esc((p.goals || []).join(", ") || "Your goals are open.")}</p><a class="btn" href="#/onboarding" data-edit-profile>Edit local profile</a></section><section class="side-panel"><h2>Browser-local data</h2><p>${Object.keys(state.saved).length} saved opportunities · ${Object.keys(state.colleges).length} colleges · ${state.submissions.length} submissions</p><p>Export your local work or delete it from this browser. Downloads can contain the profile and notes you entered.</p><button class="btn secondary" data-export>Export local data</button><button class="btn secondary" data-clear-data>Delete local data</button></section></div>`,
+        `<div class="settings-grid"><section class="side-panel"><h2>${p.firstName ? esc(p.firstName) + "â€™s starting point" : "Your starting point"}</h2><p>${esc([p.grade ? `Grade ${p.grade}` : "Grade not set", p.region || p.country].filter(Boolean).join(" Â· "))}</p><p>${esc((p.interests || []).join(", ") || "Interests not set yet")}</p><p>${esc((p.goals || []).join(", ") || "Your goals are open.")}</p><a class="btn" href="#/onboarding" data-edit-profile>Edit local profile</a></section><section class="side-panel"><h2>Browser-local data</h2><p>${Object.keys(state.saved).length} saved opportunities Â· ${Object.keys(state.colleges).length} colleges Â· ${state.submissions.length} submissions</p><p>Export your local work or delete it from this browser. Downloads can contain the profile and notes you entered.</p><button class="btn secondary" data-export>Export local data</button><button class="btn secondary" data-clear-data>Delete local data</button></section></div>${providerSettings()}${legacyImportControl()}`,
     );
   }
   function notFound() {
     return page(
-      `<div class="empty"><p class="kicker">Page not found</p><h1>Let’s find your next step.</h1><p>This page is unavailable. Your saved work is still here.</p>${btn("Return to Sparrow", "#/")}</div>`,
+      `<div class="empty"><p class="kicker">Page not found</p><h1>Letâ€™s find your next step.</h1><p>This page is unavailable. Your saved work is still here.</p>${btn("Return to Sparrow", "#/")}</div>`,
     );
   }
   function render(focus = false) {
@@ -497,7 +548,8 @@
     const r = route(),
       parts = r.split("/");
     let html;
-    if (r === "/") html = landing();
+    if (r === "/tour") html = tour();
+    else if (r === "/") html = landing();
     else if (r === "/how-it-works") {
       html = landing();
     } else if (r === "/start" || r === "/onboarding") html = onboarding();
@@ -530,7 +582,7 @@
           "Browser storage is unavailable. Your work lasts for this visit only.",
         ),
       );
-    document.title = `${{ "/opportunities": "Opportunities", "/saved": "My opportunities", "/colleges": "College Explorer", "/advisor": "AI Advisor", "/contribute": "Add opportunity", "/credits": "Credits", "/settings": "Settings", "/start": "Get started", "/onboarding": "Your profile" }[r] || "Find your next step"} — Sparrow`;
+    document.title = `${{ "/opportunities": "Opportunities", "/saved": "My opportunities", "/colleges": "College Explorer", "/advisor": "AI Advisor", "/contribute": "Add opportunity", "/credits": "Credits", "/settings": "Settings", "/start": "Get started", "/onboarding": "Your profile" }[r] || "Find your next step"} â€” Sparrow`;
     if (focus) {
       window.scrollTo(0, 0);
       $("#main").focus({ preventScroll: true });
@@ -548,11 +600,12 @@
       updatedAt: new Date().toISOString(),
     };
   }
-  async function confirmRemoval(title, copy) {
+  async function confirmRemoval(title, copy, label = "Remove item") {
     const dialog = $("#confirm-dialog"),
       prior = document.activeElement;
     $("#dialog-title").textContent = title;
     dialog.querySelector("p").textContent = copy;
+    dialog.querySelector("[value=remove]").textContent = label;
     dialog.returnValue = "cancel";
     dialog.showModal();
     dialog.querySelector('button[value="cancel"]').focus();
@@ -630,7 +683,7 @@
         "aria-label",
         open ? "Close navigation" : "Open navigation",
       );
-      t.textContent = open ? "×" : "☰";
+      t.textContent = open ? "Ã—" : "â˜°";
     } else if (t.dataset.save) await toggleSave(t.dataset.save);
     else if (t.dataset.track) {
       if (!state.saved[t.dataset.track]) addSaved(t.dataset.track);
@@ -692,6 +745,54 @@
       state.advisor.draft = $('[name="draft"]').value;
       persist();
       render();
+    } else if (t.hasAttribute("data-import-preview")) {
+      if (
+        !(await confirmRemoval(
+          "Import earlier browser work?",
+          "This replaces this sign-inâ€™s local profile, saved items, college notes, submissions, and draft. Import only work that belongs to you.",
+          "Import preview",
+        ))
+      )
+        return;
+      try {
+        const prior = JSON.parse(localStorage.getItem("sparrow.preview.v1"));
+        if (
+          prior?.version !== 1 ||
+          !prior.profile ||
+          !prior.saved ||
+          !prior.colleges ||
+          !Array.isArray(prior.submissions)
+        )
+          throw new Error();
+        state = { ...clean(), ...prior };
+        persist();
+        render();
+        toast("Earlier browser work imported into this local workspace.");
+      } catch {
+        toast(
+          "The earlier preview could not be imported. Its data has not been deleted.",
+        );
+      }
+    } else if (t.hasAttribute("data-delete-answer")) {
+      state.advisor.answer = null;
+      state.advisor.providerRequestId = null;
+      persist();
+      render();
+      toast("Saved advisor response deleted.");
+    } else if (t.dataset.provider) {
+      try {
+        await publik.setChoice(t.dataset.provider);
+        render();
+        toast("AI provider choice updated.");
+      } catch (ex) {
+        showProviderError(ex);
+      }
+    } else if (t.hasAttribute("data-sign-out")) {
+      try {
+        await publik.signOut();
+      } catch (ex) {
+        showProviderError(ex);
+      }
     } else if (t.dataset.editSubmission) {
       editSubmission = t.dataset.editSubmission;
       render(true);
@@ -748,8 +849,8 @@
     } else if (t.hasAttribute("data-clear-data")) {
       if (
         !(await confirmRemoval(
-          "Delete all local data?",
-          "This deletes your profile, saved work, college notes, submissions, and advisor draft from this browser.",
+          "Delete this workspaceâ€™s local data?",
+          "This deletes this sign-inâ€™s local profile, saved work, college notes, submissions, and advisor draft. Other sign-ins and the earlier unsigned preview are not removed.",
         ))
       )
         return;
@@ -795,7 +896,7 @@
       persist();
     } else if (t.closest("#onboarding-form")) saveProfileForm();
   });
-  document.addEventListener("change", (e) => {
+  document.addEventListener("change", async (e) => {
     const t = e.target;
     if (t.closest("#filters")) {
       filters[t.name] = t.value;
@@ -818,6 +919,16 @@
         toast("Application status updated.");
         if (savedTab !== "All saved") render();
       }
+    } else if (t.name === "usageConsent") {
+      try {
+        await publik.setUsage(t.checked);
+        $("#provider-feedback").textContent = t.checked
+          ? "Official usage counting enabled."
+          : "Official usage counting disabled.";
+      } catch (ex) {
+        t.checked = !t.checked;
+        showProviderError(ex);
+      }
     } else if (t.name === "advisorContext" || t.name === "advisorCollege") {
       const key = t.name === "advisorContext" ? "opportunityIds" : "collegeIds";
       const selected = new Set(state.advisor[key] || []);
@@ -837,7 +948,7 @@
       }
     }
   });
-  document.addEventListener("submit", (e) => {
+  document.addEventListener("submit", async (e) => {
     const form = e.target;
     if (form.method === "dialog") return;
     e.preventDefault();
@@ -874,7 +985,110 @@
     } else if (form.id === "advisor-form") {
       state.advisor.draft = new FormData(form).get("draft");
       persist();
-      toast("Draft saved locally. No AI request was sent.");
+      if (e.submitter?.value !== "send") {
+        toast("Draft saved locally. No AI request was sent.");
+        return;
+      }
+      if (advisorBusy) return;
+      const error = form.querySelector("#advisor-error");
+      error.textContent = "";
+      if (!state.advisor.draft.trim()) {
+        error.textContent = "Write a request before sending.";
+        return;
+      }
+      if (!form.querySelector("[name=confirmAi]").checked) {
+        error.textContent =
+          "Confirm provider usage before sending this AI request.";
+        return;
+      }
+      const p = state.profile,
+        include = $("[name=includeProfile]").checked;
+      const profile = {
+        interests: include
+          ? [
+              ...(p.interests || []),
+              ...(p.customInterest ? [p.customInterest] : []),
+            ]
+          : [],
+        goals: include ? p.goals || [] : [],
+      };
+      if (include) {
+        if (p.grade) profile.grade = p.grade;
+        if (p.region) profile.region = p.region;
+        if (
+          p.weeklyHours !== " " &&
+          p.weeklyHours !== undefined &&
+          p.weeklyHours !== ""
+        )
+          profile.weeklyHours = Number(p.weeklyHours);
+        if (p.budget) profile.budget = p.budget;
+      }
+      if ($("[name=includeExperience]").checked && p.experience)
+        profile.activities = p.experience.slice(0, 1500);
+      advisorBusy = true;
+      form.querySelector("[value=send]").disabled = true;
+      form.querySelector("[value=send]").textContent = "Request in progressâ€¦";
+      try {
+        const providersBefore = publik.info.providers.join(", ");
+        await publik.refresh();
+        if (providersBefore !== publik.info.providers.join(", ")) {
+          form.querySelector("[name=confirmAi]").checked = false;
+          $("#advisor-providers").textContent =
+            "AI providers: " + publik.info.providers.join(", ") + ".";
+          throw new Error(
+            "The provider list changed. Review it and confirm again before sending.",
+          );
+        }
+        const result = await publik.call("advisor", {
+          request: {
+            task: state.advisor.task,
+            draft: state.advisor.draft,
+            profile,
+            requestId: crypto.randomUUID(),
+            confirmed: true,
+          },
+        });
+        if (!result.answer)
+          throw new Error("Sign in again before sending an advisor request.");
+        state.advisor.answer = result.answer;
+        state.advisor.providerRequestId = result.providerRequestId;
+        persist();
+        advisorBusy = false;
+        if (route() === "/advisor") render();
+        toast("Advisor response saved in this browser.");
+      } catch (ex) {
+        if (route() === "/advisor") {
+          const target = $("#advisor-error");
+          target.textContent = ex.message;
+          if (ex.topUpUrl) {
+            const a = document.createElement("a");
+            a.href = ex.topUpUrl;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.className = "text-link";
+            a.textContent = "Open publik";
+            target.append(document.createElement("br"), a);
+          }
+        }
+      } finally {
+        advisorBusy = false;
+        const send = $("#advisor-form [value=send]");
+        if (send) {
+          send.disabled = !publik.info.providerReady;
+          send.textContent = "Send to advisor";
+        }
+      }
+    } else if (form.id === "personal-key-form") {
+      const input = form.querySelector("[name=personalKey]");
+      const value = input.value;
+      input.value = "";
+      try {
+        await publik.setOwnKey(value);
+        render();
+        toast("Personal key saved in your encrypted session.");
+      } catch (ex) {
+        showProviderError(ex);
+      }
     } else if (form.id === "contribute-form") {
       const f = new FormData(form),
         url = String(f.get("url")).trim();
@@ -926,10 +1140,24 @@
       $(".menu-toggle").focus();
     }
   });
-  window.addEventListener("hashchange", () => render(true));
+  window.addEventListener("hashchange", async () => {
+    if (route() === "/advisor") {
+      try {
+        await publik.refresh();
+      } catch {
+        return;
+      }
+    }
+    render(true);
+  });
   window.addEventListener("storage", (e) => {
     if (e.key === KEY)
       toast("Preview data changed in another tab. Reload before editing.");
   });
+  if (!state.tourDone && (!location.hash || location.hash === "#/")) {
+    location.hash = "/tour";
+  }
   render();
 })();
+
+

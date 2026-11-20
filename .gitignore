@@ -2,6 +2,7 @@
 .agents/skills/
 /skills-lock.json
 .taste-skill/
+.vercel/
 
 # Generated previews, reports, and archives
 sparrow/shots/
@@ -22,3 +23,6 @@ node_modules/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+.vercel
+.env*

@@ -1,0 +1,8 @@
+{
+  "name": "Sparrow",
+  "slug": "newsparrow",
+  "listingUrl": "https://publikhq.com/newsparrow",
+  "outputType": "hosted_web",
+  "openWebUrl": "https://newsparrow.vercel.app/",
+  "publikApi": { "enabled": true, "products": ["ai.chat"] }
+}
