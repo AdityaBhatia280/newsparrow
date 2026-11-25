@@ -1,40 +1,87 @@
 ﻿# Sparrow
 
-A college-preparation and extracurricular planning app. Live website: https://newsparrow.vercel.app/. Publik listing: https://publikhq.com/newsparrow.
+Sparrow helps high school students find extracurriculars that fit, explore colleges with official data, and keep every application moving.
 
-Sparrow opens with Sign in with publik. The server adapts the official publik module to separate visitor sessions. Provider credentials live in encrypted, HttpOnly cookies and server environment configuration; no credentials are exposed to frontend JavaScript or localStorage.
+- Live site: https://newsparrow.vercel.app/
+- publik listing: https://publikhq.com/newsparrow
 
-## Development
+## What's in the app
 
-Use Node 22.15 or newer within the Node 22 release line:
+- **Landing, Privacy, Terms and Support pages.** Static and fast, with a procedural WebGL glass-sculpture hero.
+- **Sign-in.** Google, directly (OpenID Connect with PKCE, state and nonce), with a 13+ and Terms consent checkbox. No email or password sign-in.
+- **Sign in with publik.** Required right after Sparrow sign-in, before the first app page, using publik's official hosted-web module. AI runs on each student's own publik account.
+- **Onboarding.**
+  - A seven-step survey covering grade, state, stage, interests, goals, time and budget.
+  - Resume import: PDF, DOCX or TXT, read in the browser with contact details removed, then analyzed by AI with evidence checks (or a no-AI parser).
+  - A personalized plan, then a five-part run-through and a dock tour.
+- **Home.** Up-next tasks, a six-week timeline, picked-for-you matches, the college shortlist and the activities list.
+- **Explore.** A real, link-checked catalog of 78 long-running programs, ranked by deterministic match scoring. Filters, detail pages, and "Discover with AI" (publik web search).
+- **Colleges.** 1,784 four-year public and private nonprofit colleges from the U.S. Department of Education College Scorecard. Search, filters, shortlist with tags and notes, compare up to four.
+- **Plan.** A kanban board (drag or keyboard), tasks, a month calendar with `.ics` export, and a grade 9–12 roadmap.
+- **Advisor.** Threaded AI conversations. Saved opportunities and colleges are sent as verified records with sources. Quick, Balanced and Deep tiers. Answers come back as structured cards with "Add as task".
+- **Profile.** A Common App-style activities and honors builder with character counters, AI "Tighten to 150", resume re-import and a printable brag sheet.
+- **Contribute.** Suggest an official link. An SSRF-safe fetch plus AI extraction produces a draft where every field quotes the page, and a reviewer approves it.
+- **Rewards.** Points and badges for approved suggestions (no cash value), plus the publik AI allowance shown as a percentage.
+- **Settings.** Your own publik key (stored encrypted), the usage-counting switch, reduced effects, JSON export, sign out everywhere, and account deletion.
+- **Reviewer tools** (`SPARROW_ADMIN_EMAILS`). The review queue, catalog management, source re-checks with AI, and an audit log.
+
+Design system: [DESIGN.md](DESIGN.md). Integration notes: [sparrow/PUBLIK-INTEGRATION.md](sparrow/PUBLIK-INTEGRATION.md). Status: [sparrow/IMPLEMENTATION-STATUS.md](sparrow/IMPLEMENTATION-STATUS.md).
+
+## Architecture
+
+| Path | What |
+|---|---|
+| `sparrow/src/` | Preact 11 + signals SPA (JSX), bundled by esbuild into `sparrow/dist/` |
+| `sparrow/public/` | Static pages (landing, legal, 404, app shell) and images |
+| `api/index.ts` | The single Vercel function. `vercel.json` rewrites every `/api/*` path to it |
+| `server/` | The API (`app.mjs` route table), Google sign-in, the publik module and Postgres store, AI pipeline, matching, safe fetch, calendar |
+| `shared/` | Taxonomy and text helpers used by both browser and server |
+| `db/migrations/` | Postgres schema (RLS on, no REST access) |
+| `db/seed/` | Curated opportunity catalog and the College Scorecard snapshot |
+| `tests/` | Unit and integration tests (PGlite, fake publik, fake Google), and the browser smoke test |
+
+## Run it locally
+
+Requires Node 22.
 
 ```sh
 npm ci
-npm run build
-npm start
+cp .env.example .env      # then fill in the values
+npm run db:migrate
+npm run db:seed
+npm run dev               # build, then serve on http://127.0.0.1:4173
 ```
 
-Open http://127.0.0.1:4173. Local start loads the ignored `.env` using Node's native environment-file support. Configure `PUBLIK_APP_TOKEN` and `SPARROW_SESSION_SECRET` in the server environment. Never commit or share their values.
+Google sign-in setup (Google Cloud console → APIs & Services):
+- OAuth consent screen: External, app name Sparrow, scopes `openid`, `email`, `profile` (no verification review needed for these). Publish it to "In production" so anyone can sign in.
+- Credentials → Create OAuth client ID → Web application. Authorized redirect URIs: `https://newsparrow.vercel.app/api/auth` and `http://127.0.0.1:4173/api/auth`.
+- Put the client ID and secret in `SPARROW_GOOGLE_CLIENT_ID` and `SPARROW_GOOGLE_CLIENT_SECRET`.
+
+Database: create a free Neon Postgres database (Vercel → Storage → Neon, or neon.tech) and put its **pooled** connection string in `DATABASE_URL`.
+
+For local development, set `SPARROW_AUTH_ORIGIN=http://127.0.0.1:4173`.
+
+## Tests
 
 ```sh
-npm run test:integration
-npm test
+npm run build
+npm run test:integration   # 46 unit and integration tests against in-process PGlite and test fakes
+npm test                   # browser smoke test through the whole journey (needs Chrome or Edge; set CHROME_PATH if needed)
 ```
 
-Integration tests use an isolated local fake provider. Browser tests launch an isolated headless Chrome/Edge profile and exercise the real sign-in adapter against that test fixture, never a production authentication bypass. Set `CHROME_PATH` if necessary. No test makes a paid provider call.
+No test touches a real service or makes a billable call. Set `SPARROW_SHOTS=<folder>` to save screenshots from the smoke test.
 
-## Vercel
+## Deploy (Vercel)
 
-Keep the project Root Directory at the repository root. `vercel.json` uses the Other framework preset, `npm ci`, `npm run build`, static output `sparrow/dist/`, and a Node API function at `/api/publik`. Set `PUBLIK_APP_TOKEN` and `SPARROW_SESSION_SECRET` as sensitive server environment variables before deploying. They must not have public frontend prefixes. Push the production branch to deploy.
+1. Keep the project root at the repository root. `vercel.json` sets the build (`npm run build`), the output (`sparrow/dist`), the rewrites and the security headers.
+2. Add every variable from `.env.example` in Vercel as server-side environment variables. `SPARROW_SUPPORT_EMAIL` is read at build time.
+3. Run `npm run db:migrate && npm run db:seed` once against the production `DATABASE_URL`.
+4. Push. Then open the site, sign in, and confirm the first page after sign-in is **Sign in with publik**.
 
-The site uses hash routes (`/#/opportunities`), so no catch-all rewrite is required. The API function keeps credentials and paid requests on the server. A missing server configuration produces an honest unavailable sign-in screen.
+## Data upkeep
 
-## Current scope
-
-Onboarding, example opportunities/details, application statuses/tasks, college shortlists, local submissions, and the Sparrow zero-credit explanation remain available. The Advisor supports explicit, confirmed general planning and draft feedback through `publik-balanced`, with validated structured output and saved browser-local responses. Personal publik keys can be configured in Settings. Official usage counting is optional and can be turned off.
-
-Profile data and work remain browser-local, under a namespace for this sign-in. They do not sync across devices. Settings supports export, deletion, and explicit import of the earlier unsigned local preview. LocalStorage is not a private cloud database; use sample information and avoid sensitive data.
-
-Opportunity records are fictional and are not sent to AI as verified records. College entries are illustrative records with official homepages. Source fetching, extraction, moderation, resume parsing, real Sparrow credit purchases/transfers, and a verified catalog remain unconnected.
-
-See [integration notes](sparrow/PUBLIK-INTEGRATION.md) and [implementation status](sparrow/IMPLEMENTATION-STATUS.md) for proof and limitations.
+| Command | What it does |
+|---|---|
+| `npm run catalog:check` | Re-checks every catalog link. `--write` drops dead ones |
+| `npm run colleges:fetch -- --csv <file>` | Rebuilds the college snapshot from the Scorecard bulk file (or uses the API with `DATA_GOV_API_KEY`) |
+| `node scripts/render-og.mjs` | Re-renders the social preview image |

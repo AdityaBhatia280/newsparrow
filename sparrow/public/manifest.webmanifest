@@ -1,0 +1,10 @@
+{
+  "name": "Sparrow",
+  "short_name": "Sparrow",
+  "description": "Plan high school and what comes next: extracurriculars, colleges and applications in one place.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#02030a",
+  "theme_color": "#050a1f",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
