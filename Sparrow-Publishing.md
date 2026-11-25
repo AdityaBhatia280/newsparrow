@@ -2,7 +2,7 @@ Sparrow — product specification and AI implementation brief
 0. Authority, current direction, and status
 Owner: Aditya Bhatia. Product: Sparrow, a college-preparation and extracurricular planning app. This document supersedes the earlier Sparrow video-editor specification. Do not implement video editing, media rendering, Arcade templates, or video-generation infrastructure from the obsolete plan.
 
-Current requested scope: landing page; onboarding; opportunity details; opportunities and application tracking; College Explorer; AI Advisor; add-an-opportunity submission; personal credits account and sharing. The swipe-based discovery feed is explicitly deferred. Keep the papaya-orange, white, and charcoal visual identity.
+Current requested scope: landing page; onboarding; opportunity details; opportunities and application tracking; College Explorer; AI Advisor; add-an-opportunity submission; personal credits account and sharing. The swipe-based discovery feed is explicitly deferred. Brand update (Nov 2026, owner direction): Sparrow is blue, with vivid gradients and liquid glass. See DESIGN.md; the earlier papaya-orange identity is retired.
 
 The user mentioned a design skill but did not provide an identifiable skill attachment or name. Use the design system in this file until the exact skill is supplied. Do not claim it has been applied.
 
@@ -44,7 +44,7 @@ No mentor marketplace, college admissions probability predictor, course planner,
 Visual concept
 An editorial opportunity guide, not an analytics dashboard. Lead with large useful type, spacious lists, intentional dividers, warm orange highlights, and clear next actions. No charts, fake metrics, cluttered KPI cards, streak pressure, or generic AI gradients. Use original interface copy and assets.
 
-Colors: papaya #FF8000; charcoal #171717; paper #FFFFFF; warm canvas #F7F7F2; orange tint #FFF0DF; orange text #9A4200; secondary text #62625B; border #E4E4DC; success #176446; error #B42318. Orange is McLaren-inspired, not an official specification or affiliation. Dark text on orange primary controls. Test final contrast and do not communicate status only with color.
+Colors: superseded by DESIGN.md (blue "Sky Glass" palette: signal #2B7FFF on a midnight canvas, vivid blue gradients, liquid glass). Keep status communicated with text or icons, not color alone, and test contrast.
 
 Type: clean sans serif for interface and a contrasting editorial serif for large landing headlines. Local system fallbacks should remain attractive without external font loads. Use 16 px body text, 14 px metadata, 40–76 px responsive hero text, and 28–44 px page headings. Long paragraphs max approximately 65 characters per line.
 

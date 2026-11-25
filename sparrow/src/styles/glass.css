@@ -1,0 +1,193 @@
+/* ---------- the midnight sky ---------- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #0d2a7a 0%, rgba(13, 42, 122, 0) 55%),
+    radial-gradient(90% 70% at 100% 100%, #091a52 0%, rgba(9, 26, 82, 0) 60%),
+    linear-gradient(180deg, #050b26 0%, #030617 55%, #02030a 100%);
+}
+
+.sky__blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.85;
+  will-change: transform;
+  animation: sky-drift 32s var(--ease-in-out) infinite alternate;
+}
+
+.sky__blob--1 {
+  width: 70vmax;
+  height: 70vmax;
+  left: -22vmax;
+  top: -30vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(43, 127, 255, 0.55) 0%, rgba(43, 127, 255, 0.18) 38%, rgba(43, 127, 255, 0) 68%);
+}
+
+.sky__blob--2 {
+  width: 60vmax;
+  height: 60vmax;
+  right: -24vmax;
+  top: -12vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(75, 77, 255, 0.5) 0%, rgba(75, 77, 255, 0.14) 40%, rgba(75, 77, 255, 0) 68%);
+  animation-duration: 38s;
+  animation-delay: -12s;
+}
+
+.sky__blob--3 {
+  width: 64vmax;
+  height: 64vmax;
+  left: 18vw;
+  bottom: -40vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.32) 0%, rgba(34, 211, 238, 0.1) 40%, rgba(34, 211, 238, 0) 66%);
+  animation-duration: 44s;
+  animation-delay: -20s;
+}
+
+.sky__stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 72% 12%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 38% 64%, rgba(217, 240, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 86% 54%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 22% 82%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1.5px 1.5px at 58% 32%, rgba(143, 208, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 92% 88%, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 640px 640px;
+}
+
+.sky__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+@keyframes sky-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-4vmax, 7vmax, 0) scale(0.96);
+  }
+}
+
+/* ---------- liquid glass ---------- */
+.glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--r-card);
+  background: var(--glass-sheen), var(--glass-tint);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(165%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(165%);
+}
+
+/* A brighter rim: a gradient border drawn with a mask so it follows the radius. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--glass-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  opacity: 0.55;
+  z-index: -1;
+}
+
+.glass--strong {
+  background: var(--glass-sheen), var(--glass-tint-strong);
+}
+
+.glass--pad {
+  padding: var(--s5);
+}
+
+.glass--lg {
+  padding: clamp(20px, 3vw, 32px);
+}
+
+/* Interactive glass lifts 2px and catches light where the pointer is. */
+.glass--interactive {
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.glass--interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(143, 208, 255, 0.16), transparent 42%);
+  transition: opacity 0.35s var(--ease);
+  z-index: -1;
+}
+
+.glass--interactive:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143, 208, 255, 0.32);
+  box-shadow: var(--glass-shadow), var(--glass-glow);
+}
+
+.glass--interactive:hover::after {
+  opacity: 1;
+}
+
+/* Air's light "Haze" surface, used for documents (resume text, brag sheet). */
+.haze {
+  background: #f5f5f5;
+  color: #1b1b1b;
+  border-radius: var(--r-card);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- reduced effects: school Chromebooks, reduced transparency, or the setting ---------- */
+:root[data-effects="reduced"] .glass,
+:root[data-effects="reduced"] .glass--strong {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: var(--solid-panel);
+}
+
+:root[data-effects="reduced"] .sky__blob {
+  animation: none;
+}
+
+:root[data-effects="reduced"] .sky__grain,
+:root[data-effects="reduced"] .glass--interactive::after {
+  display: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass--strong {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--solid-panel);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky__blob {
+    animation: none;
+  }
+  .glass--interactive:hover {
+    transform: none;
+  }
+}

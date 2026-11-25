@@ -1,20 +1,24 @@
-# Local agent tooling (runtime assets copied into sparrow/dist stay tracked)
+# Build output (Vercel runs npm run build)
+sparrow/dist/
+
+# Local agent and design tooling
 .agents/skills/
 /skills-lock.json
 .taste-skill/
+.impeccable/
 .vercel/
 
-# Generated previews, reports, and archives
+# Old preview artifacts
 sparrow/shots/
 sparrow/sparrow-preview.zip
 sparrow/QA-REPORT.md
 
-# Dependencies and local caches
+# Dependencies and caches
 node_modules/
 .cache/
 *.log
 
-# Local configuration and secrets
+# Secrets and local configuration
 .env
 .env.*
 !.env.example
@@ -23,6 +27,3 @@ node_modules/
 .DS_Store
 Thumbs.db
 Desktop.ini
-
-.vercel
-.env*

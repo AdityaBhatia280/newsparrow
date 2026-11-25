@@ -1,31 +1,81 @@
-# Publik integration
+# publik integration
 
-Approved identity: **Sparrow**. Repository: `AdityaBhatia280/newsparrow`. Slug: `newsparrow`. Hosted URL: https://newsparrow.vercel.app/. Listing URL: https://publikhq.com/newsparrow. Publik's submission response reported `live`; app token minting enabled `ai.chat`. No license was added.
+**Identity**
 
-## Modules and session boundary
+| | |
+|---|---|
+| Listing | **Sparrow** |
+| Slug | `newsparrow` |
+| Repository | `AdityaBhatia280/newsparrow` (public) |
+| Hosted URL | https://newsparrow.vercel.app/ |
+| Listing URL | https://publikhq.com/newsparrow |
+| `publik.json` | `outputType: "hosted_web"` |
 
-- `server/publik.mjs`: copied from the first TypeScript code block in the current official SDK, with types stripped and hosted-request adaptations documented below. App slug and version are literal constants in code.
-- `server/publik-handler.mjs`: same-origin Node API handler for the sign-in gate, provider choice, telemetry, and a constrained advisor request.
-- `server/session.mjs`: AES-256-GCM session sealing, seven-day expiry, HttpOnly/SameSite cookies, and Secure cookies on Vercel. Each visitor receives a distinct install credential. No founder API-key override is used for hosted requests.
-- `sparrow/dist/publik.js`: browser gate UI and server bridge. `app.js` awaits `ensureSignedIn()` before rendering any application-owned page. The HTML shell itself starts with the sign-in screen.
-- `api/publik.ts`: Vercel function entry point; it imports server code, never a public bundle.
+## Order of screens
 
-The official module's desktop credential reader/writer is overridden through AsyncLocalStorage only for hosted requests. Its normal install, wallet, plan choice, tier models, telemetry endpoints, and response handling are retained. The browser handles the nonblocking sign-in poll. Hosted telemetry uses the current visitor's install ID and key, sends app_opened after the gate, and active_session every 30 minutes while the app is open. There is no second telemetry SDK.
+1. Public pages: landing, privacy, terms, support. No sign-in.
+2. `/app`: Sparrow sign-in, with Google (direct OpenID Connect, PKCE), with a 13+/Terms consent.
+3. **Sign in with publik**, before any app page. `GET /api/session` calls `ensureUser(userId)`.
+   - Until the person is `claimed`, the app shows the gate. It behaves like the module's `gatePage()`: the claim link carries `return_to`, and `/api/publik/status` is polled every 3 seconds for up to 10 minutes. Unreachable shows Retry.
+   - Every app API route answers `428 publik_sign_in` until then, so the gate can't be bypassed from the browser.
+4. Onboarding, then the workspace.
 
-`PUBLIK_APP_TOKEN` is a server environment value, not a committed public token file. `SPARROW_SESSION_SECRET` must remain stable across deployments to preserve sessions; rotation invalidates existing cookies. No token values belong in prompts, logs, screenshots, or commits. Native Node environment-file loading is used only for local development; Vercel supplies server environment values directly.
+## Modules
 
-## Advisor contract
+| File | Role |
+|---|---|
+| `server/publik/publik.server.mjs` | publik's official hosted-web module (https://publikhq.com/sdk/publik.server.ts.md), TypeScript types removed, logic unchanged. Holds `APP_SLUG = "newsparrow"` and `APP_VERSION`. |
+| `server/publik/store.mjs` | `useStore()` backed by Postgres (`publik_users`: one row per user ID, the module record as JSON). The `pk_` key is AES-256-GCM encrypted with `SPARROW_DATA_KEY`. |
+| `server/publik/wallet.mjs` | A fresh, money-free wallet read for consent and usage screens: `remaining_percent`, `prepaid_remaining_percent`, `ai_providers`, `hasPlan`, `top_up_url`. |
+| `server/ai/client.mjs` | The only path to `POST /chat/completions` and `POST /search` (see below). |
 
-Only a confirmed request sends the task, draft, and explicitly included profile fields. Names, account IDs, unrelated records, college notes, saved notes, API keys, and fictional opportunity facts are excluded. Experience is opt-in and limited to 1,500 characters. Input/output are validated with Zod. Unknown record IDs, invented source IDs, unsupported fields, and executable content are rejected.
+**AI call pipeline** (`server/ai/client.mjs`):
+- `resolveProvider(userId, ownKey)` picks the key: the person's encrypted own `pk_` key if they set one, otherwise their publik key.
+- Rate limits are 6 per minute and 60 per day per person, stored in the database.
+- `provider_requests` provides idempotency: the same `requestId` answers 409.
+- 402 returns the provider message plus exactly one `top_up_url`; 429 passes on `Retry-After`.
+- A network failure is recorded as "unknown" and never retried.
+- Output is validated with Zod.
 
-No verified records are present, so the server prompt permits general planning and draft feedback, not factual program comparisons. At most three recommendations are returned. Everything renders as escaped text. The provider choice is a connected publik plan or the visitor's own personal publik API key. No model call runs on page loads, filters, or checkboxes.
+Telemetry:
+- `trackActive` runs on every app request; `/api/ping` is a content-free heartbeat while a tab is visible.
+- The Settings switch calls `setUsage`.
+- `app_opened` and `active_session` come only from the module.
 
-402 responses retain the provider's message and one verified publik link. Failures retain drafts. Billable operations are not automatically retried. Sparrow reward credits remain zero and independent of publik billing. Usage is shown only as provider percentages, never monetary amounts.
+## What is sent to AI
 
-## Verification and limits
+Only after the student confirms. The consent line names `ai_providers` from a fresh wallet read.
 
-The automated suite checks the gate before the landing page, session/credential isolation, a founder-key override negative test, encrypted-cookie tampering, CSRF, usage opt-out, independent telemetry, strict advisor output, duplicate requests within one process, 402 behavior, and browser workflows at five widths. Its provider is explicitly a test fixture, never a production success simulation.
+| Feature | Tier | Sent |
+|---|---|---|
+| Resume analysis | balanced | Resume text with emails, phones, links and addresses removed (in the browser, then again on the server) |
+| Onboarding plan | balanced | Profile fields (no name or email), activities, 20 candidate listings |
+| Advisor | fast / balanced / smart | Question, chosen profile fields, optional activities, recent thread, and selected saved opportunities and colleges as records with sources |
+| Tighten activity | fast | That activity's name, role and description |
+| Contribution extraction / re-check | fast | Text of a public page fetched with SSRF protection |
+| Discover | `/search` | The search phrase |
 
-Still required for full production readiness: durable private profile storage, a server session registry/revocation policy, distributed rate limiting, durable cross-instance request reconciliation/idempotency, approved verified sources, ingestion/moderation, privacy/support operations, and real user/provider verification. Current duplicate prevention and rate limits are per process; they do not claim distributed or durable guarantees. Sign-out clears this browser's session cookie; provider-side key revocation is independent.
+Never sent: names, emails, account IDs, notes, other people's data, or keys. Model output is checked:
+- Unknown record IDs and sources are removed.
+- Resume items and extracted fields are kept only when their quoted evidence appears in the source.
+- Executable content is rejected.
 
-A real hosted proof must confirm the public URL shows the sign-in gate first. A real authenticated AI request and its provider errors must be checked separately from the fixture tests. Publication and runtime verification status are recorded in IMPLEMENTATION-STATUS.md.
+## Verification
+
+`npm run test:integration` checks:
+- the gate (428 before claim);
+- per-person installs and encrypted keys;
+- no credentials in responses;
+- `app_opened` → `active_session`, and the usage opt-out;
+- own key usage;
+- that the founder key is never used;
+- 402/429/502/503 handling without retries;
+- idempotency and rate limits;
+- evidence and ID filtering, and redaction.
+
+All of this runs against a local fake publik. `npm test` drives the same flow in a browser.
+
+**Still to confirm in production:**
+- After the first deploy, open the live URL, sign in, and confirm the next page is **Sign in with publik**.
+- Make one deliberate real AI request.
+- Discover uses `POST /search`. If the listing needs search enabled separately, publik's error message is shown to the student.

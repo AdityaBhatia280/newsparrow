@@ -1,0 +1,1658 @@
+{
+  "about": "Sparrow's curated starter catalog: long-running programs with their official sites. Stable facts only (name, organization, official link, type, broad grades, format). Deadlines and fees are never seeded; reviewers verify them from the official source in the admin tools. Run npm run catalog:check to re-check every link.",
+  "items": [
+    {
+      "slug": "regeneron-sts",
+      "title": "Regeneron Science Talent Search",
+      "provider": "Society for Science",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "medicine",
+        "computing",
+        "engineering",
+        "math",
+        "environment"
+      ],
+      "grades": [
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A national science and math competition for high school seniors, who apply with an original research project.",
+      "officialUrl": "https://www.societyforscience.org/regeneron-sts/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "regeneron-isef",
+      "title": "Regeneron International Science and Engineering Fair",
+      "provider": "Society for Science",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "medicine",
+        "computing",
+        "engineering",
+        "math",
+        "environment"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A global pre-college science fair. Students qualify by winning at an affiliated local or regional fair.",
+      "officialUrl": "https://www.societyforscience.org/isef/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "jshs",
+      "title": "Junior Science & Humanities Symposium",
+      "provider": "JSHS",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "engineering",
+        "math",
+        "environment",
+        "medicine",
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "unknown",
+      "summary": "Students present original research at regional symposia, and top presenters advance to a national event.",
+      "officialUrl": "https://jshs.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "rsi",
+      "title": "Research Science Institute",
+      "provider": "Center for Excellence in Education",
+      "type": "research",
+      "interests": [
+        "biology",
+        "math",
+        "engineering",
+        "computing",
+        "medicine"
+      ],
+      "grades": [
+        11
+      ],
+      "format": "in_person",
+      "location": "Cambridge, Massachusetts",
+      "cost": "free",
+      "summary": "A summer research program where students conduct original research with mentors and present their results.",
+      "officialUrl": "https://www.cee.org/programs/research-science-institute",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "mites-summer",
+      "title": "MITES Summer",
+      "provider": "Massachusetts Institute of Technology",
+      "type": "program",
+      "interests": [
+        "engineering",
+        "computing",
+        "math"
+      ],
+      "grades": [
+        11
+      ],
+      "format": "in_person",
+      "location": "Cambridge, Massachusetts",
+      "cost": "free",
+      "summary": "A rigorous summer program in science and engineering at MIT for rising high school seniors.",
+      "officialUrl": "https://mites.mit.edu/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "simons-summer-research",
+      "title": "Simons Summer Research Program",
+      "provider": "Stony Brook University",
+      "type": "research",
+      "interests": [
+        "biology",
+        "math",
+        "engineering",
+        "computing",
+        "medicine"
+      ],
+      "grades": [
+        11
+      ],
+      "format": "in_person",
+      "location": "Stony Brook, New York",
+      "cost": "unknown",
+      "summary": "Students join a Stony Brook faculty research group for the summer and present their work.",
+      "officialUrl": "https://www.stonybrook.edu/simons/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "nih-summer-internship",
+      "title": "NIH Summer Internship Program",
+      "provider": "National Institutes of Health",
+      "type": "internship",
+      "interests": [
+        "medicine",
+        "biology"
+      ],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Students work in NIH research labs over the summer alongside scientists.",
+      "officialUrl": "https://www.training.nih.gov/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "nasa-internships",
+      "title": "NASA Internships",
+      "provider": "NASA Office of STEM Engagement",
+      "type": "internship",
+      "interests": [
+        "engineering",
+        "computing",
+        "math",
+        "environment"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Internships at NASA centers and online in science, engineering, technology and more.",
+      "officialUrl": "https://intern.nasa.gov/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "stanford-simr",
+      "title": "Stanford Institutes of Medicine Summer Research Program",
+      "provider": "Stanford University",
+      "type": "research",
+      "interests": [
+        "medicine",
+        "biology"
+      ],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "Stanford, California",
+      "cost": "unknown",
+      "summary": "A summer program where students do hands-on research in Stanford medicine labs with mentors.",
+      "officialUrl": "https://simr.stanford.edu/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "science-olympiad",
+      "title": "Science Olympiad",
+      "provider": "Science Olympiad",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "engineering",
+        "math",
+        "environment",
+        "medicine"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A team competition with events across biology, earth science, chemistry, physics, engineering and technology.",
+      "officialUrl": "https://www.soinc.org/"
+    },
+    {
+      "slug": "usa-biology-olympiad",
+      "title": "USA Biology Olympiad",
+      "provider": "Center for Excellence in Education",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "medicine"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A national biology competition that begins with exams at school and selects the U.S. international team.",
+      "officialUrl": "https://www.usabo-trc.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "usaco",
+      "title": "USA Computing Olympiad",
+      "provider": "USACO",
+      "type": "competition",
+      "interests": [
+        "computing",
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Online programming contests in four divisions, from Bronze to Platinum, with training resources.",
+      "officialUrl": "https://usaco.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "amc-10-12",
+      "title": "American Mathematics Competitions (AMC 10/12)",
+      "provider": "Mathematical Association of America",
+      "type": "competition",
+      "interests": [
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Math contests taken at participating schools and the first step toward the USA Mathematical Olympiad.",
+      "officialUrl": "https://maa.org/student-programs/amc/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "congressional-app-challenge",
+      "title": "Congressional App Challenge",
+      "provider": "Congressional App Challenge",
+      "type": "competition",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Students build an original app and enter it in their congressional district's challenge.",
+      "officialUrl": "https://www.congressionalappchallenge.us/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "ncwit-aspirations",
+      "title": "NCWIT Award for Aspirations in Computing",
+      "provider": "National Center for Women & Information Technology",
+      "type": "award",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Recognizes high school students' interests and achievements in computing and connects them to a supportive community.",
+      "officialUrl": "https://www.aspirations.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "technovation-girls",
+      "title": "Technovation Girls",
+      "provider": "Technovation",
+      "type": "competition",
+      "interests": [
+        "computing",
+        "business"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Teams of girls build a mobile app or AI project that tackles a problem in their community.",
+      "officialUrl": "https://technovationchallenge.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "picoctf",
+      "title": "picoCTF",
+      "provider": "Carnegie Mellon University",
+      "type": "competition",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "A free cybersecurity competition and practice platform built around hands-on hacking challenges.",
+      "officialUrl": "https://picoctf.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "cyberpatriot",
+      "title": "CyberPatriot",
+      "provider": "Air & Space Forces Association",
+      "type": "competition",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A national youth cyber defense competition where teams secure virtual computer systems.",
+      "officialUrl": "https://www.uscyberpatriot.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "first-robotics-competition",
+      "title": "FIRST Robotics Competition",
+      "provider": "FIRST",
+      "type": "competition",
+      "interests": [
+        "engineering",
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "High school teams design, build and program large robots to compete in a new game each season.",
+      "officialUrl": "https://www.firstinspires.org/robotics/frc",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "first-tech-challenge",
+      "title": "FIRST Tech Challenge",
+      "provider": "FIRST",
+      "type": "competition",
+      "interests": [
+        "engineering",
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Teams design, build and code robots and compete in alliances at events.",
+      "officialUrl": "https://www.firstinspires.org/robotics/ftc",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "vex-robotics-competition",
+      "title": "VEX Robotics Competition",
+      "provider": "REC Foundation",
+      "type": "competition",
+      "interests": [
+        "engineering",
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Teams build and program robots for a new game challenge each season.",
+      "officialUrl": "https://www.recf.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "american-rocketry-challenge",
+      "title": "American Rocketry Challenge",
+      "provider": "Aerospace Industries Association",
+      "type": "competition",
+      "interests": [
+        "engineering",
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Teams design, build and fly model rockets to meet a new set of flight goals each year.",
+      "officialUrl": "https://rocketcontest.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "hack-club",
+      "title": "Hack Club",
+      "provider": "Hack Club",
+      "type": "club",
+      "interests": [
+        "computing",
+        "engineering"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A nonprofit network of teen-run coding clubs, hackathons and build projects.",
+      "officialUrl": "https://hackclub.com/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "girls-who-code-clubs",
+      "title": "Girls Who Code Clubs",
+      "provider": "Girls Who Code",
+      "type": "club",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Free clubs where students learn to code and build projects together.",
+      "officialUrl": "https://girlswhocode.com/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "kode-with-klossy",
+      "title": "Kode With Klossy",
+      "provider": "Kode With Klossy",
+      "type": "program",
+      "interests": [
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Free summer coding camps for teens learning to build with code.",
+      "officialUrl": "https://www.kodewithklossy.com/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "mit-think-scholars",
+      "title": "MIT THINK Scholars Program",
+      "provider": "Massachusetts Institute of Technology",
+      "type": "competition",
+      "interests": [
+        "computing",
+        "engineering",
+        "math",
+        "biology",
+        "environment"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Students propose a science or technology project; finalists get mentorship and funding to build it.",
+      "officialUrl": "https://think.mit.edu/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "scholastic-art-writing-awards",
+      "title": "Scholastic Art & Writing Awards",
+      "provider": "Alliance for Young Artists & Writers",
+      "type": "award",
+      "interests": [
+        "arts",
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A long-running program that recognizes creative teens across art and writing categories.",
+      "officialUrl": "https://www.artandwriting.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "youngarts",
+      "title": "YoungArts National Arts Competition",
+      "provider": "National YoungArts Foundation",
+      "type": "award",
+      "interests": [
+        "arts",
+        "music",
+        "writing"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Recognizes emerging artists in visual, literary, design and performing arts.",
+      "officialUrl": "https://youngarts.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "nyt-student-contests",
+      "title": "The New York Times Student Contests",
+      "provider": "The New York Times Learning Network",
+      "type": "competition",
+      "interests": [
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Writing and multimedia contests through the school year, from personal narratives to editorials.",
+      "officialUrl": "https://www.nytimes.com/section/learning"
+    },
+    {
+      "slug": "john-locke-essay-competition",
+      "title": "John Locke Institute Essay Competition",
+      "provider": "John Locke Institute",
+      "type": "competition",
+      "interests": [
+        "writing",
+        "policy"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "An essay competition with questions in philosophy, politics, economics, history and more.",
+      "officialUrl": "https://www.johnlockeinstitute.com/essay-competition",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "profile-in-courage-essay",
+      "title": "Profile in Courage Essay Contest",
+      "provider": "John F. Kennedy Presidential Library and Museum",
+      "type": "competition",
+      "interests": [
+        "writing",
+        "policy"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Students write an essay about an elected official who showed political courage.",
+      "officialUrl": "https://www.jfklibrary.org/learn/education/profile-in-courage-essay-contest"
+    },
+    {
+      "slug": "poetry-out-loud",
+      "title": "Poetry Out Loud",
+      "provider": "National Endowment for the Arts and Poetry Foundation",
+      "type": "competition",
+      "interests": [
+        "writing",
+        "arts"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A poetry recitation competition that starts in schools and advances to state and national rounds.",
+      "officialUrl": "https://www.poetryoutloud.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "national-history-day",
+      "title": "National History Day",
+      "provider": "National History Day",
+      "type": "competition",
+      "interests": [
+        "policy",
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Students research a historical topic and present it as a paper, exhibit, documentary, performance or website.",
+      "officialUrl": "https://www.nhd.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "speech-and-debate",
+      "title": "National Speech & Debate Association",
+      "provider": "National Speech & Debate Association",
+      "type": "club",
+      "interests": [
+        "policy",
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Speech and debate teams and tournaments through member schools.",
+      "officialUrl": "https://www.speechanddebate.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "we-the-people",
+      "title": "We the People",
+      "provider": "Center for Civic Education",
+      "type": "competition",
+      "interests": [
+        "policy"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Classes study the Constitution and compete in simulated congressional hearings.",
+      "officialUrl": "https://www.civiced.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "telluride-summer-seminar",
+      "title": "Telluride Association Summer Seminar",
+      "provider": "Telluride Association",
+      "type": "program",
+      "interests": [
+        "writing",
+        "policy"
+      ],
+      "grades": [
+        10,
+        11
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A free summer seminar where students read and discuss challenging texts in a small community.",
+      "officialUrl": "https://www.tellurideassociation.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "princeton-summer-journalism",
+      "title": "Princeton Summer Journalism Program",
+      "provider": "Princeton University",
+      "type": "program",
+      "interests": [
+        "writing"
+      ],
+      "grades": [
+        11
+      ],
+      "format": "hybrid",
+      "location": "Princeton, New Jersey",
+      "cost": "free",
+      "summary": "A free journalism program for high school students from low-income backgrounds.",
+      "officialUrl": "https://psjp.princeton.edu/"
+    },
+    {
+      "slug": "adroit-summer-mentorship",
+      "title": "Adroit Journal Summer Mentorship Program",
+      "provider": "The Adroit Journal",
+      "type": "program",
+      "interests": [
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "An online creative writing mentorship where students work one-on-one with writers.",
+      "officialUrl": "https://theadroitjournal.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "bennington-young-writers",
+      "title": "Bennington Young Writers Awards",
+      "provider": "Bennington College",
+      "type": "award",
+      "interests": [
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A writing competition for high school students in poetry, fiction and nonfiction.",
+      "officialUrl": "https://www.bennington.edu/events/young-writers-awards",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "deca",
+      "title": "DECA",
+      "provider": "DECA Inc.",
+      "type": "club",
+      "interests": [
+        "business"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Student chapters that build marketing, finance and management skills through competitive events.",
+      "officialUrl": "https://www.deca.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "fbla",
+      "title": "Future Business Leaders of America",
+      "provider": "FBLA",
+      "type": "club",
+      "interests": [
+        "business"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Business-focused chapters with competitions, conferences and leadership roles.",
+      "officialUrl": "https://www.fbla.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "diamond-challenge",
+      "title": "Diamond Challenge",
+      "provider": "University of Delaware Horn Entrepreneurship",
+      "type": "competition",
+      "interests": [
+        "business",
+        "service"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A pitch competition for teen teams with a business or social venture idea.",
+      "officialUrl": "https://diamondchallenge.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "ja-company-program",
+      "title": "JA Company Program",
+      "provider": "Junior Achievement USA",
+      "type": "program",
+      "interests": [
+        "business"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Students launch and run a real business with guidance from volunteer mentors.",
+      "officialUrl": "https://jausa.ja.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "us-senate-youth-program",
+      "title": "United States Senate Youth Program",
+      "provider": "The Hearst Foundations",
+      "type": "award",
+      "interests": [
+        "policy"
+      ],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "Washington, D.C.",
+      "cost": "free",
+      "summary": "Two student delegates from each state spend a week in Washington and receive a college scholarship.",
+      "officialUrl": "https://ussenateyouth.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "coca-cola-scholars",
+      "title": "Coca-Cola Scholars Program",
+      "provider": "Coca-Cola Scholars Foundation",
+      "type": "scholarship",
+      "interests": [],
+      "grades": [
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "An achievement-based scholarship for high school seniors who show leadership and service.",
+      "officialUrl": "https://www.coca-colascholarsfoundation.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "gates-scholarship",
+      "title": "The Gates Scholarship",
+      "provider": "The Gates Scholarship",
+      "type": "scholarship",
+      "interests": [],
+      "grades": [
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A scholarship for high-achieving, Pell-eligible high school seniors from minority backgrounds.",
+      "officialUrl": "https://www.thegatesscholarship.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "questbridge",
+      "title": "QuestBridge",
+      "provider": "QuestBridge",
+      "type": "program",
+      "interests": [],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Connects high-achieving students from low-income backgrounds with scholarships and leading colleges.",
+      "officialUrl": "https://www.questbridge.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "jack-kent-cooke-college-scholarship",
+      "title": "Jack Kent Cooke Foundation College Scholarship",
+      "provider": "Jack Kent Cooke Foundation",
+      "type": "scholarship",
+      "interests": [],
+      "grades": [
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A scholarship for high-achieving high school seniors with financial need.",
+      "officialUrl": "https://www.jkcf.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "national-merit",
+      "title": "National Merit Scholarship Program",
+      "provider": "National Merit Scholarship Corporation",
+      "type": "scholarship",
+      "interests": [],
+      "grades": [
+        11
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "An academic competition for recognition and scholarships that starts with the PSAT/NMSQT in junior year.",
+      "officialUrl": "https://www.nationalmerit.org/"
+    },
+    {
+      "slug": "davidson-fellows",
+      "title": "Davidson Fellows Scholarship",
+      "provider": "Davidson Institute",
+      "type": "scholarship",
+      "interests": [
+        "math",
+        "computing",
+        "engineering",
+        "biology",
+        "writing",
+        "music"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Recognizes young people who have completed a significant project in STEM, literature, music or philosophy.",
+      "officialUrl": "https://www.davidsongifted.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "breakthrough-junior-challenge",
+      "title": "Breakthrough Junior Challenge",
+      "provider": "Breakthrough Prize Foundation",
+      "type": "competition",
+      "interests": [
+        "biology",
+        "math",
+        "engineering",
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Students create a short video that explains a big idea in science or math.",
+      "officialUrl": "https://breakthroughjuniorchallenge.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "doodle-for-google",
+      "title": "Doodle for Google",
+      "provider": "Google",
+      "type": "competition",
+      "interests": [
+        "arts"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "United States",
+      "cost": "free",
+      "summary": "An art contest where students design a Google Doodle around a yearly theme.",
+      "officialUrl": "https://doodles.google.com/d4g/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "ocean-awareness-contest",
+      "title": "Ocean Awareness Contest",
+      "provider": "Bow Seat Ocean Awareness Programs",
+      "type": "competition",
+      "interests": [
+        "environment",
+        "arts",
+        "writing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Students create art, writing, film or music about the ocean and climate.",
+      "officialUrl": "https://bowseat.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "envirothon",
+      "title": "NCF-Envirothon",
+      "provider": "National Conservation Foundation",
+      "type": "competition",
+      "interests": [
+        "environment"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Teams test their knowledge of soils, forestry, wildlife, aquatic ecology and a current environmental issue.",
+      "officialUrl": "https://envirothon.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "national-ocean-sciences-bowl",
+      "title": "National Ocean Sciences Bowl",
+      "provider": "National Ocean Sciences Bowl",
+      "type": "competition",
+      "interests": [
+        "environment",
+        "biology"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A quiz-bowl style competition on ocean science with regional and national rounds.",
+      "officialUrl": "https://nosb.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "student-conservation-association",
+      "title": "Student Conservation Association",
+      "provider": "Student Conservation Association",
+      "type": "volunteering",
+      "interests": [
+        "environment",
+        "service"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Conservation crews where young people restore trails, parks and habitats.",
+      "officialUrl": "https://www.thesca.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "hosa",
+      "title": "HOSA-Future Health Professionals",
+      "provider": "HOSA",
+      "type": "club",
+      "interests": [
+        "medicine"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Student chapters for future health professionals, with competitive events and leadership roles.",
+      "officialUrl": "https://hosa.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "american-red-cross-volunteering",
+      "title": "American Red Cross Volunteering",
+      "provider": "American Red Cross",
+      "type": "volunteering",
+      "interests": [
+        "medicine",
+        "service"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Volunteer roles and youth clubs that support blood drives, disaster preparedness and more.",
+      "officialUrl": "https://www.redcross.org/volunteer/become-a-volunteer.html"
+    },
+    {
+      "slug": "habitat-for-humanity-youth",
+      "title": "Habitat for Humanity Youth Programs",
+      "provider": "Habitat for Humanity",
+      "type": "volunteering",
+      "interests": [
+        "service",
+        "engineering"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Ways for young people to help build and repair homes in their communities.",
+      "officialUrl": "https://www.habitat.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "key-club",
+      "title": "Key Club",
+      "provider": "Kiwanis International",
+      "type": "club",
+      "interests": [
+        "service",
+        "education"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A student-led service organization with chapters in high schools.",
+      "officialUrl": "https://www.keyclub.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "best-buddies",
+      "title": "Best Buddies",
+      "provider": "Best Buddies International",
+      "type": "club",
+      "interests": [
+        "service",
+        "education"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "School chapters that build friendships with people with intellectual and developmental disabilities.",
+      "officialUrl": "https://www.bestbuddies.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "special-olympics-unified",
+      "title": "Special Olympics Unified Champion Schools",
+      "provider": "Special Olympics",
+      "type": "club",
+      "interests": [
+        "service",
+        "education"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Unified sports, leadership and inclusive activities for students with and without intellectual disabilities.",
+      "officialUrl": "https://www.specialolympics.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "dosomething",
+      "title": "DoSomething",
+      "provider": "DoSomething.org",
+      "type": "volunteering",
+      "interests": [
+        "service"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Campaigns young people can join to take action on causes they care about.",
+      "officialUrl": "https://www.dosomething.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "big-brothers-big-sisters",
+      "title": "Big Brothers Big Sisters",
+      "provider": "Big Brothers Big Sisters of America",
+      "type": "volunteering",
+      "interests": [
+        "education",
+        "service"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Mentoring programs where older students can be a role model for a younger child.",
+      "officialUrl": "https://www.bbbs.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "national-honor-society",
+      "title": "National Honor Society",
+      "provider": "National Association of Secondary School Principals",
+      "type": "club",
+      "interests": [
+        "service",
+        "education"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A school chapter that recognizes scholarship, service, leadership and character.",
+      "officialUrl": "https://www.nhs.us/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "four-h",
+      "title": "4-H",
+      "provider": "National 4-H Council",
+      "type": "club",
+      "interests": [
+        "environment",
+        "engineering",
+        "service"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Youth clubs for hands-on projects in science, agriculture, civic engagement and more.",
+      "officialUrl": "https://4-h.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "national-ffa",
+      "title": "National FFA Organization",
+      "provider": "National FFA Organization",
+      "type": "club",
+      "interests": [
+        "environment",
+        "business"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Student chapters focused on agriculture, leadership and career skills.",
+      "officialUrl": "https://www.ffa.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "civil-air-patrol-cadets",
+      "title": "Civil Air Patrol Cadet Programs",
+      "provider": "Civil Air Patrol",
+      "type": "program",
+      "interests": [
+        "engineering",
+        "service"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A cadet program with aerospace education, leadership training and flight activities.",
+      "officialUrl": "https://www.gocivilairpatrol.com/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "nyo-usa",
+      "title": "National Youth Orchestra of the USA",
+      "provider": "Carnegie Hall",
+      "type": "program",
+      "interests": [
+        "music"
+      ],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A summer orchestra program for talented young musicians, including a concert tour.",
+      "officialUrl": "https://www.carnegiehall.org/nyo",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "math-prize-for-girls",
+      "title": "Math Prize for Girls",
+      "provider": "Advantage Testing Foundation",
+      "type": "competition",
+      "interests": [
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "unknown",
+      "summary": "A national math competition for high school girls.",
+      "officialUrl": "https://mathprize.atfoundation.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "hmmt",
+      "title": "Harvard-MIT Mathematics Tournament",
+      "provider": "HMMT",
+      "type": "competition",
+      "interests": [
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "Cambridge, Massachusetts",
+      "cost": "varies",
+      "summary": "A student-run math competition with individual and team rounds.",
+      "officialUrl": "https://www.hmmt.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "promys",
+      "title": "PROMYS",
+      "provider": "Boston University",
+      "type": "program",
+      "interests": [
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "Boston, Massachusetts",
+      "cost": "unknown",
+      "summary": "A summer program where students explore number theory through challenging problem sets.",
+      "officialUrl": "https://promys.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "canada-usa-mathcamp",
+      "title": "Canada/USA Mathcamp",
+      "provider": "Mathematics Foundation of America",
+      "type": "program",
+      "interests": [
+        "math"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "A summer program with classes and problem solving for mathematically curious students.",
+      "officialUrl": "https://www.mathcamp.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "yale-young-global-scholars",
+      "title": "Yale Young Global Scholars",
+      "provider": "Yale University",
+      "type": "program",
+      "interests": [
+        "policy",
+        "biology",
+        "computing",
+        "writing"
+      ],
+      "grades": [
+        10,
+        11
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "varies",
+      "summary": "Summer sessions in topics such as politics, sciences and the humanities, with need-based aid.",
+      "officialUrl": "https://globalscholars.yale.edu/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "navy-seap",
+      "title": "Science and Engineering Apprenticeship Program",
+      "provider": "U.S. Navy Office of Naval Research",
+      "type": "internship",
+      "interests": [
+        "engineering",
+        "math",
+        "computing"
+      ],
+      "grades": [
+        10,
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "Summer research apprenticeships at Navy laboratories for high school students.",
+      "officialUrl": "https://www.navalsteminterns.us/internships/seap/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "army-aeop",
+      "title": "Army Educational Outreach Program",
+      "provider": "U.S. Army",
+      "type": "program",
+      "interests": [
+        "engineering",
+        "biology",
+        "computing"
+      ],
+      "grades": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "format": "varies",
+      "location": "United States",
+      "cost": "free",
+      "summary": "STEM programs, competitions and research apprenticeships for students.",
+      "officialUrl": "https://www.usaeop.com/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "rise-for-the-world",
+      "title": "Rise",
+      "provider": "Schmidt Futures and the Rhodes Trust",
+      "type": "program",
+      "interests": [],
+      "grades": [],
+      "format": "virtual",
+      "location": "Online",
+      "cost": "free",
+      "summary": "Finds young people who are working to serve others and supports them with scholarships and mentorship.",
+      "officialUrl": "https://www.risefortheworld.org/",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    },
+    {
+      "slug": "bank-of-america-student-leaders",
+      "title": "Bank of America Student Leaders",
+      "provider": "Bank of America",
+      "type": "internship",
+      "interests": [
+        "service",
+        "business"
+      ],
+      "grades": [
+        11,
+        12
+      ],
+      "format": "in_person",
+      "location": "United States",
+      "cost": "free",
+      "summary": "A paid summer internship with a local nonprofit plus a leadership summit.",
+      "officialUrl": "https://about.bankofamerica.com/en/making-an-impact/student-leaders",
+      "linkCheckedAt": "2026-11-24T22:44:40.261Z"
+    }
+  ]
+}

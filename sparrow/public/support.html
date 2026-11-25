@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Support · Sparrow</title>
+    <meta name="description" content="Help with Sparrow sign-in, AI features, your data and listings." />
+    <meta name="theme-color" content="#050a1f" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/site.css" />
+    <script type="module" src="/landing.js"></script>
+  </head>
+  <body class="site">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="sky" aria-hidden="true"><i class="sky__blob sky__blob--1"></i><i class="sky__blob sky__blob--2"></i><i class="sky__blob sky__blob--3"></i><i class="sky__stars"></i><i class="sky__grain"></i></div>
+    <header class="site-nav is-scrolled" id="site-nav">
+      <a class="brand" href="/" aria-label="Sparrow home"><svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#2b7fff" /><path d="M10 22 31 31 52 13 41 37 24 48 28 35Z" fill="#fff" /></svg><span>sparrow</span></a>
+      <nav class="site-nav__links" aria-label="Main"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a></nav>
+      <div class="site-nav__actions"><a class="btn btn--primary btn--sm" href="/app">Open Sparrow</a></div>
+    </header>
+    <main id="content" class="doc-page" tabindex="-1">
+      <div class="doc-page__head">
+        <p class="kicker">Support</p>
+        <h1 class="display">How <span class="script">can</span> we help?</h1>
+      </div>
+      <div class="faq">
+        <details class="glass" open><summary>Google says my school account is blocked</summary><p>Some schools only allow apps they’ve approved on student Google accounts. Sign in with a personal Google account instead, or ask your school’s IT team to allow Sparrow.</p></details>
+        <details class="glass"><summary>Why do I sign in with publik too?</summary><p>Sparrow’s AI features run on publik under your own account, so your AI usage is yours. Signing in with publik once connects it. Sparrow never sees your publik password.</p></details>
+        <details class="glass"><summary>The advisor says I’m out of allowance</summary><p>AI requests use your publik allowance. Use the link in the message to get a plan on publik, or add your own publik API key in Settings. Everything else in Sparrow works without AI.</p></details>
+        <details class="glass"><summary>A listing has the wrong information</summary><p>Open it in Explore and choose “Suggest a correction”, then add the official page that shows the right details. A reviewer checks every correction.</p></details>
+        <details class="glass"><summary>How do I download or delete my data?</summary><p>Go to Settings. “Export my data” downloads everything as a file. “Delete account” permanently deletes your Sparrow data.</p></details>
+        <details class="glass"><summary>Sparrow is slow on my school laptop</summary><p>Open Settings → Appearance and choose Reduced. It turns off the glass blur and animations.</p></details>
+      </div>
+      <div class="glass prose"><h2>Still stuck?</h2><p>Contact us at {{SUPPORT_CONTACT}}. Please don’t include passwords or keys in your message.</p></div>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <p class="small muted">Planning tools for high school and what comes next.</p>
+        <nav class="site-footer__links" aria-label="Footer"><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="https://github.com/AdityaBhatia280/newsparrow" target="_blank" rel="noopener noreferrer">Open source</a></nav>
+      </div>
+      <p class="site-footer__fine small muted">© {{YEAR}} Sparrow.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Sparrow · Find your next step</title>
+    <meta name="description" content="Sparrow helps high school students find extracurriculars that fit, explore 1,700+ colleges with official data, and keep every application moving." />
+    <meta name="theme-color" content="#050a1f" />
+    <link rel="canonical" href="https://newsparrow.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sparrow · Find your next step" />
+    <meta property="og:description" content="Extracurriculars that fit you, official data on 1,700+ colleges, and a plan that keeps every application moving." />
+    <meta property="og:url" content="https://newsparrow.vercel.app/" />
+    <meta property="og:image" content="https://newsparrow.vercel.app/images/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preload" href="/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <script type="module" src="/landing.js"></script>
+  </head>
+  <body class="site">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <div class="sky" aria-hidden="true">
+      <i class="sky__blob sky__blob--1"></i><i class="sky__blob sky__blob--2"></i><i class="sky__blob sky__blob--3"></i><i class="sky__stars"></i><i class="sky__grain"></i>
+    </div>
+
+    <header class="site-nav" id="site-nav">
+      <a class="brand" href="/" aria-label="Sparrow home">
+        <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="nav-mark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f6bff" /><stop offset=".6" stop-color="#2b7fff" /><stop offset="1" stop-color="#8fe1ff" /></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#nav-mark)" /><path d="M10 22 31 31 52 13 41 37 24 48 28 35Z" fill="#fff" /><path d="M31 31 41 37 52 13Z" fill="#fff" opacity=".55" /></svg>
+        <span>sparrow</span>
+      </a>
+      <nav class="site-nav__links" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#grades">Grades 9–12</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+      <div class="site-nav__actions">
+        <a class="btn btn--ghost btn--sm" href="/app">Sign in</a>
+        <a class="btn btn--primary btn--sm" href="/app">Get started</a>
+      </div>
+    </header>
+
+    <main id="top" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__art" aria-hidden="true">
+          <canvas id="hero-canvas"></canvas>
+          <div class="hero__orbs"><i></i><i></i><i></i></div>
+        </div>
+        <div class="hero__inner">
+          <div class="hero__copy" data-reveal>
+            <p class="kicker">For high school students · Grades 9–12</p>
+            <h1 class="display display--xl hero__title" id="hero-title">Find your <span class="script">next</span> step</h1>
+            <p class="lead">
+              Sparrow matches you with real extracurriculars, shows official data on 1,700+ colleges, and turns every application into a plan you can actually finish.
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn--primary btn--lg" href="/app">Get started free <span aria-hidden="true">→</span></a>
+              <a class="btn btn--ghost btn--lg" href="#how">See how it works</a>
+            </div>
+            <p class="small muted">Free to use. AI features run on your own publik account, only when you ask.</p>
+          </div>
+
+          <div class="mock glass glass--strong" data-reveal aria-hidden="true">
+            <div class="mock__top">
+              <span class="mock__dot"></span><span class="mock__dot"></span><span class="mock__dot"></span>
+              <span class="mock__url">newsparrow.vercel.app/app</span>
+            </div>
+            <div class="mock__body">
+              <p class="mock__kicker">Tuesday, March 3</p>
+              <p class="mock__hello">Good evening, <span class="script">Maya</span></p>
+              <div class="mock__stats">
+                <span><b>6</b>Saved</span><span><b>3</b>Preparing</span><span><b>1</b>Submitted</span><span><b>5</b>Colleges</span>
+              </div>
+              <div class="mock__cards">
+                <div class="mock__card">
+                  <span class="tile tile--sm" data-type="competition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z" /><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4" /></svg></span>
+                  <b>Congressional App Challenge</b>
+                  <span class="tag tag--great">Great match</span>
+                </div>
+                <div class="mock__card">
+                  <span class="tile tile--sm" data-type="research"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.5L4 20h16l-6-10.5V2M8.5 2h7M7 16h10" /></svg></span>
+                  <b>NASA Internships</b>
+                  <span class="tag tag--blue">Good match</span>
+                </div>
+              </div>
+              <div class="mock__task"><i></i>Ask a teacher for a recommendation <span class="tag">In 3 days</span></div>
+            </div>
+            <div class="mock__dock">
+              <span class="is-on">Home</span><span>Explore</span><span>Colleges</span><span>Plan</span><span>Advisor</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how" aria-labelledby="how-title">
+        <div class="section__head" data-reveal>
+          <p class="kicker">How it works</p>
+          <h2 class="display display--md" id="how-title">Three steps to <span class="script">your</span> plan</h2>
+        </div>
+        <ol class="steps">
+          <li class="glass glass--interactive step" data-reveal>
+            <span class="step__num">01</span>
+            <h3>Tell us about you</h3>
+            <p>A two-minute survey about your grade, interests, time and goals. Drop in a resume and Sparrow pulls out your activities. The file never leaves your device.</p>
+          </li>
+          <li class="glass glass--interactive step" data-reveal>
+            <span class="step__num">02</span>
+            <h3>Get matched</h3>
+            <p>See extracurriculars, competitions, internships and scholarships ranked by fit, plus colleges worth a look, each with a reason why.</p>
+          </li>
+          <li class="glass glass--interactive step" data-reveal>
+            <span class="step__num">03</span>
+            <h3>Make it happen</h3>
+            <p>Track every application on a board, check off tasks, export dates to your calendar, and ask the advisor when you're stuck.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="section__head" data-reveal>
+          <p class="kicker">Features</p>
+          <h2 class="display display--md" id="features-title">Everything <span class="script">in</span> one place</h2>
+        </div>
+        <div class="bento">
+          <article class="glass glass--interactive bento__item bento__item--wide bento__item--blue" data-reveal>
+            <p class="kicker">Explore</p>
+            <h3>Real opportunities, ranked for you</h3>
+            <p>Programs, competitions, research, internships and scholarships, each linked to its official site. Filter by interest, grade, format and cost, or search the web with AI.</p>
+            <div class="bento__chips"><span class="chip chip--sm">Computer science</span><span class="chip chip--sm" aria-pressed="true">Matches me</span><span class="chip chip--sm">Free</span><span class="chip chip--sm">Virtual</span></div>
+          </article>
+          <article class="glass glass--interactive bento__item" data-reveal>
+            <p class="kicker">Colleges</p>
+            <h3>1,700+ colleges, official data</h3>
+            <p>Cost, size, graduation rates and top programs from the U.S. Department of Education. Shortlist, take notes and compare side by side.</p>
+          </article>
+          <article class="glass glass--interactive bento__item" data-reveal>
+            <p class="kicker">Plan</p>
+            <h3>Every application on one board</h3>
+            <p>Drag from Interested to Submitted, add tasks and target dates, and export it all to your calendar.</p>
+          </article>
+          <article class="glass glass--interactive bento__item bento__item--wide bento__item--indigo" data-reveal>
+            <p class="kicker">Advisor</p>
+            <h3>AI that sticks to the facts</h3>
+            <p>Ask for a plan, a comparison or feedback on a draft. It only uses facts Sparrow can show you, labels its time estimates, and never writes your essays for you.</p>
+          </article>
+          <article class="glass glass--interactive bento__item bento__item--wide bento__item--cyan" data-reveal>
+            <p class="kicker">Activities list</p>
+            <h3>Ready when applications are</h3>
+            <p>Build a Common App-style list with live 50, 100 and 150-character counters, tighten descriptions with AI in your own voice, and print a brag sheet for recommenders.</p>
+          </article>
+          <article class="glass glass--interactive bento__item" data-reveal>
+            <p class="kicker">Resume</p>
+            <h3>Read on your device</h3>
+            <p>Drop in a PDF or Word resume. Sparrow reads it in your browser, removes contact details, and turns it into activities you approve.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="grades" aria-labelledby="grades-title">
+        <div class="section__head" data-reveal>
+          <p class="kicker">Grades 9–12</p>
+          <h2 class="display display--md" id="grades-title">A plan for <span class="script">every</span> year</h2>
+        </div>
+        <div class="glass glass--strong grades" data-reveal>
+          <div class="segmented" role="tablist" aria-label="Grade">
+            <button type="button" role="tab" aria-pressed="true" aria-selected="true" data-grade="9">Grade 9</button>
+            <button type="button" role="tab" aria-pressed="false" aria-selected="false" data-grade="10">Grade 10</button>
+            <button type="button" role="tab" aria-pressed="false" aria-selected="false" data-grade="11">Grade 11</button>
+            <button type="button" role="tab" aria-pressed="false" aria-selected="false" data-grade="12">Grade 12</button>
+          </div>
+          <div class="grades__panel" id="grades-panel" role="tabpanel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section" id="privacy" aria-labelledby="privacy-title">
+        <div class="section__head" data-reveal>
+          <p class="kicker">Privacy</p>
+          <h2 class="display display--md" id="privacy-title">Your data, <span class="script">your</span> call</h2>
+        </div>
+        <ul class="promises">
+          <li class="glass" data-reveal><strong>Never sold.</strong> No ads, no selling your information, ever.</li>
+          <li class="glass" data-reveal><strong>Read on your device.</strong> Your resume file stays in your browser; you choose what text is shared.</li>
+          <li class="glass" data-reveal><strong>AI only when you ask.</strong> Nothing is sent to AI without your confirmation, and never your name or contact details.</li>
+          <li class="glass" data-reveal><strong>Yours to take or delete.</strong> Export everything or delete your account any time in Settings.</li>
+        </ul>
+      </section>
+
+      <section class="cta" aria-labelledby="cta-title">
+        <div class="glass glass--strong cta__card" data-reveal>
+          <h2 class="display" id="cta-title">Start with <span class="script">one</span> step</h2>
+          <p class="lead">It takes two minutes to set up. Your plan is waiting on the other side.</p>
+          <div class="hero__actions" style="justify-content: center">
+            <a class="btn btn--primary btn--lg" href="/app">Get started free <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="small muted">For students 13 and older.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="stack stack--sm">
+          <a class="brand" href="/" aria-label="Sparrow home">
+            <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#2b7fff" /><path d="M10 22 31 31 52 13 41 37 24 48 28 35Z" fill="#fff" /></svg>
+            <span>sparrow</span>
+          </a>
+          <p class="small muted">Planning tools for high school and what comes next.</p>
+        </div>
+        <nav class="site-footer__links" aria-label="Footer">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="/support">Support</a>
+          <a href="https://publikhq.com/newsparrow" target="_blank" rel="noopener noreferrer">Sparrow on publik</a>
+          <a href="https://github.com/AdityaBhatia280/newsparrow" target="_blank" rel="noopener noreferrer">Open source</a>
+        </nav>
+      </div>
+      <p class="site-footer__fine small muted">© {{YEAR}} Sparrow. College data: U.S. Department of Education College Scorecard. Opportunities belong to their organizers; always confirm details on official sites.</p>
+    </footer>
+  </body>
+</html>
